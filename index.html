@@ -3,386 +3,323 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roadmapa ES MPO – Ivoš | WHC s.r.o.</title>
+<title>ES MPO Portál – Ivoš | WHC s.r.o.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;color:#1a1a1a;min-height:100vh}
-.app{max-width:780px;margin:0 auto;padding:20px 16px 48px}
-
-/* Header */
-.header{background:#fff;border-radius:16px;border:1px solid #e8e8e8;padding:20px 24px;margin-bottom:20px}
-.header-top{display:flex;align-items:center;gap:14px;margin-bottom:6px}
-.logo{width:36px;height:36px;border-radius:8px;background:#1B4F8A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0}
-.header h1{font-size:20px;font-weight:600;color:#1B4F8A}
-.header-sub{font-size:13px;color:#888;margin-left:50px}
-
-/* Pipeline */
-.pipeline{display:flex;align-items:flex-start;gap:0;margin-bottom:20px;background:#fff;border-radius:16px;border:1px solid #e8e8e8;padding:16px;overflow-x:auto}
-.pip-step{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex:1;min-width:80px;padding:8px 4px;border-radius:10px;transition:background .15s}
-.pip-step:hover{background:#f5f5f0}
-.pip-step.active{background:#f0f4ff}
-.pip-dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;border:2.5px solid transparent;transition:all .2s;flex-shrink:0}
-.pip-step.active .pip-dot{transform:scale(1.1)}
-.pip-lbl{font-size:11px;color:#888;text-align:center;line-height:1.3;font-weight:400}
-.pip-step.active .pip-lbl{color:#1a1a1a;font-weight:500}
-.pip-sub{font-size:10px;color:#bbb;text-align:center}
-.pip-arr{color:#ccc;font-size:18px;padding:0 2px;margin-top:12px;flex-shrink:0}
-
-/* Progress */
-.prog-wrap{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
-.prog-bar{flex:1;height:6px;background:#eee;border-radius:3px;overflow:hidden}
-.prog-fill{height:100%;border-radius:3px;transition:width .4s ease}
-.prog-txt{font-size:12px;color:#888;white-space:nowrap;min-width:80px;text-align:right}
-
-/* Detail card */
-.detail{background:#fff;border-radius:16px;border:1px solid #e8e8e8;overflow:hidden}
-.det-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #f0f0f0}
-.det-num{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;flex-shrink:0}
-.det-title{font-size:16px;font-weight:600;color:#1a1a1a}
-.det-sub{font-size:12px;color:#888;margin-top:2px}
-.det-pct{margin-left:auto;font-size:12px;color:#888;white-space:nowrap}
-.det-body{padding:18px 20px;display:flex;flex-direction:column;gap:16px}
-
-/* Alert box */
-.alert{border-radius:10px;padding:10px 14px;font-size:13px;line-height:1.55;border-left:3px solid}
-.alert.orange{border-color:#C45911;background:#FEF6EF;color:#7a3400}
-.alert.blue{border-color:#185FA5;background:#EEF5FF;color:#0a3060}
-.alert.green{border-color:#2d7a1f;background:#EFF8E9;color:#1a4a10}
-
-/* Section label */
-.sec-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#aaa;margin-bottom:8px}
-
-/* Info table */
-.info-tbl{border:1px solid #eee;border-radius:10px;overflow:hidden;font-size:13px}
-.info-row{display:flex;border-bottom:1px solid #f0f0f0}
-.info-row:last-child{border-bottom:none}
-.info-key{background:#fafafa;padding:8px 12px;min-width:120px;max-width:120px;flex-shrink:0;color:#666;font-weight:500;font-size:12px;line-height:1.4}
-.info-val{padding:8px 12px;color:#1a1a1a;line-height:1.45;font-size:13px}
-.info-val a{color:#185FA5;text-decoration:none;font-size:12px;display:block;margin-top:3px}
-.info-val a:hover{text-decoration:underline}
-
-/* Checklist */
-.cl-wrap{display:flex;flex-direction:column;gap:4px}
-.cl-item{display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:7px 10px;border-radius:8px;transition:background .1s;user-select:none}
-.cl-item:hover{background:#f8f8f6}
-.cl-box{width:18px;height:18px;border-radius:4px;border:1.5px solid #ccc;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.cl-box.done{border-color:transparent}
-.cl-box.done::after{content:'';display:block;width:5px;height:9px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg) translate(-1px,-1px)}
-.cl-txt{font-size:13px;line-height:1.4;color:#1a1a1a}
-.cl-item.checked .cl-txt{color:#aaa;text-decoration:line-through}
-
-/* Links / chips */
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:12px;border:1px solid #e0e0e0;background:#fafafa;color:#1a1a1a;text-decoration:none;transition:background .1s}
-.chip:hover{background:#f0f0f0}
-.chip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-
-/* Nav */
-.det-nav{display:flex;gap:8px;justify-content:flex-end;padding-top:12px;border-top:1px solid #f0f0f0}
-.btn{font-size:13px;padding:7px 16px;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer;color:#555;transition:all .1s}
-.btn:hover{background:#f5f5f0}
-.btn.primary{background:#1B4F8A;color:#fff;border-color:#1B4F8A}
-.btn.primary:hover{background:#163e6e}
-
-/* Footer */
-.footer{text-align:center;font-size:11px;color:#bbb;margin-top:24px}
-.footer a{color:#bbb}
-
-/* Google Drive section */
-.drive-card{background:#fff;border-radius:16px;border:1px solid #e8e8e8;padding:18px 20px;margin-top:16px}
-.drive-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.drive-icon{width:32px;height:32px;border-radius:8px;background:#EAF3DE;display:flex;align-items:center;justify-content:center;font-size:16px}
-.drive-title{font-size:14px;font-weight:600;color:#27500A}
-.folder-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
-.folder{border:1px solid #e8e8e8;border-radius:10px;padding:10px 12px;font-size:12px}
-.folder-name{font-weight:500;color:#1a1a1a;margin-bottom:3px}
-.folder-sub{color:#888;font-size:11px;line-height:1.4}
-
-@media(max-width:500px){
-  .info-key{min-width:90px;max-width:90px}
-  .pipeline{padding:10px 8px}
-  .pip-step{min-width:58px}
-  .pip-dot{width:32px;height:32px;font-size:14px}
+:root {
+  --bg-app: #F3F4F6;
+  --bg-sidebar: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F9FAFB;
+  --bg-input: #F9FAFB;
+  --border-light: #F3F4F6;
+  --border: #E5E7EB;
+  --border-dark: #D1D5DB;
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6B7280;
+  --accent: #2563EB;
+  --accent-light: #3B82F6;
+  --accent-dim: #EFF6FF;
+  --success: #10B981;
+  --success-dim: #D1FAE5;
+  --warning: #F59E0B;
+  --warning-dim: #FEF3C7;
+  --danger: #EF4444;
+  --danger-dim: #FEE2E2;
+  --info: #0EA5E9;
+  --info-dim: #E0F2FE;
+  --purple: #8B5CF6;
+  --purple-dim: #EDE9FE;
+  --radius-sm: 8px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --font: 'Inter', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --transition: all 0.2s ease-in-out;
 }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg-app); color: var(--text-secondary); min-height: 100vh; overflow-x: hidden; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: var(--accent); text-decoration: none; font-weight: 500; }
+a:hover { color: var(--accent-light); text-decoration: underline; }
+button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+input, textarea, select { font-family: var(--font); }
+h1, h2, h3, h4 { color: var(--text-primary); font-weight: 600; letter-spacing: -0.02em; }
+.app { display: flex; min-height: 100vh; }
+.sidebar { width: 260px; min-height: 100vh; background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; left: 0; top: 0; bottom: 0; z-index: 100; box-shadow: var(--shadow-sm); transition: transform 0.3s ease; }
+.sidebar-header { padding: 24px 20px; border-bottom: 1px solid var(--border-light); }
+.sidebar-logo { display: flex; align-items: center; gap: 12px; }
+.sidebar-logo .logo-icon { width: 36px; height: 36px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #fff; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+.sidebar-logo h1 { font-size: 16px; margin: 0; }
+.sidebar-logo .subtitle { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; margin-top: 2px; }
+.sidebar-nav { flex: 1; padding: 20px 12px; overflow-y: auto; }
+.nav-section { margin-bottom: 24px; }
+.nav-section-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 0 12px; margin-bottom: 8px; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-sm); color: var(--text-secondary); transition: var(--transition); font-size: 14px; font-weight: 500; cursor: pointer; margin-bottom: 2px; }
+.nav-item:hover { background: var(--bg-app); color: var(--text-primary); }
+.nav-item.active { background: var(--accent-dim); color: var(--accent); }
+.nav-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
+.nav-item.active svg { opacity: 1; }
+.nav-badge { margin-left: auto; background: var(--danger); color: #fff; font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 20px; min-width: 20px; text-align: center; line-height: 1; }
+.sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border-light); font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+.main { flex: 1; margin-left: 260px; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+.page { display: none; animation: fadeIn 0.3s ease; flex: 1; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.page-header { padding: 32px 40px; background: var(--bg-card); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+.page-header-content { position: relative; z-index: 2; display: flex; align-items: flex-start; justify-content: space-between; }
+.page-header h2 { font-size: 24px; margin-bottom: 4px; }
+.page-header .page-desc { font-size: 14px; color: var(--text-muted); max-width: 600px; }
+.hero-banner { width: 100%; height: 180px; object-fit: cover; border-radius: var(--radius); margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+.page-content { padding: 32px 40px; max-width: 1400px; margin: 0 auto; width: 100%; }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); transition: var(--transition); }
+.card:hover { box-shadow: var(--shadow); border-color: var(--border-dark); }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.card-title { font-size: 16px; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+.card-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 32px; }
+.stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); transition: var(--transition); }
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.stat-header-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.stat-card .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.stat-card .stat-label { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+.stat-card .stat-value { font-size: 32px; font-weight: 700; color: var(--text-primary); line-height: 1; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; transition: var(--transition); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 2px 4px rgba(37,99,235,0.2); }
+.btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 6px rgba(37,99,235,0.3); }
+.btn-secondary { background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-dark); }
+.btn-secondary:hover { background: var(--bg-app); color: var(--text-primary); }
+.btn-danger { background: var(--danger-dim); color: var(--danger); }
+.btn-danger:hover { background: var(--danger); color: #fff; }
+.btn-sm { padding: 6px 12px; font-size: 13px; }
+.btn-icon { padding: 8px; border-radius: var(--radius-sm); }
+.progress-container { width: 100%; max-width: 300px; }
+.progress-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary); }
+.progress-bar { height: 8px; background: var(--bg-app); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+.progress-bar .fill { height: 100%; border-radius: 4px; background: var(--accent); transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+.tag { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.tag-success { background: var(--success-dim); color: #065F46; }
+.tag-warning { background: var(--warning-dim); color: #92400E; }
+.tag-gray { background: var(--bg-app); color: var(--text-secondary); border: 1px solid var(--border); }
+.tag-purple { background: var(--purple-dim); color: #5B21B6; }
+.delivery-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+.delivery-post { background: var(--danger-dim); color: #991B1B; }
+.delivery-datovka { background: var(--purple-dim); color: #5B21B6; }
+.delivery-email { background: var(--info-dim); color: #075985; }
+.delivery-osobne { background: var(--success-dim); color: #065F46; }
+.delivery-banka { background: var(--warning-dim); color: #92400E; }
+.check-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-radius: var(--radius-sm); transition: var(--transition); cursor: pointer; border: 1px solid transparent; margin-bottom: 4px; }
+.check-item:hover { background: var(--bg-app); border-color: var(--border); }
+.check-item input[type="checkbox"] { display: none; }
+.check-box { width: 22px; height: 22px; border: 2px solid var(--border-dark); border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: var(--transition); flex-shrink: 0; margin-top: 2px; background: #fff; }
+.check-item input:checked + .check-box { background: var(--success); border-color: var(--success); }
+.check-item input:checked + .check-box::after { content: '\2713'; color: #fff; font-size: 14px; font-weight: bold; }
+.check-item input:checked ~ .check-content .check-text { color: var(--text-muted); text-decoration: line-through; }
+.check-content { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.check-text { font-size: 14px; font-weight: 500; color: var(--text-primary); transition: var(--transition); }
+.check-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.file-item { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm); transition: var(--transition); margin-bottom: 8px; box-shadow: var(--shadow-sm); }
+.file-item:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-1px); }
+.file-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.file-info { flex: 1; min-width: 0; }
+.file-name { font-size: 14px; font-weight: 500; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.file-actions { display: flex; gap: 8px; }
+.upload-zone { border: 2px dashed var(--border-dark); border-radius: var(--radius); padding: 40px; text-align: center; transition: var(--transition); cursor: pointer; background: var(--bg-card); position: relative; overflow: hidden; }
+.upload-zone:hover, .upload-zone.dragover { border-color: var(--accent); background: var(--accent-dim); }
+.upload-zone .upload-icon { font-size: 36px; margin-bottom: 12px; position: relative; z-index: 2; }
+.upload-zone .upload-text { font-size: 15px; font-weight: 500; color: var(--accent); margin-bottom: 4px; position: relative; z-index: 2; }
+.upload-zone .upload-hint { font-size: 13px; color: var(--text-muted); position: relative; z-index: 2; }
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--bg-card); border-radius: var(--radius-lg); padding: 32px; max-width: 560px; width: 90%; box-shadow: var(--shadow-lg); animation: modalIn 0.3s ease; }
+@keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } }
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.modal-title { font-size: 20px; font-weight: 600; color: var(--text-primary); }
+.modal-close { font-size: 24px; color: var(--text-muted); transition: var(--transition); line-height: 1; cursor: pointer; }
+.modal-close:hover { color: var(--danger); }
+.input { width: 100%; padding: 12px 16px; background: #fff; border: 1px solid var(--border-dark); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 14px; transition: var(--transition); margin-bottom: 16px; }
+.input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+.empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); background: var(--bg-app); border-radius: var(--radius); border: 1px dashed var(--border-dark); display: flex; flex-direction: column; align-items: center; }
+.empty-image { max-width: 150px; margin-bottom: 20px; border-radius: var(--radius-sm); }
+.empty-state .empty-text { font-size: 15px; font-weight: 500; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+.cal-header { text-align: center; font-size: 12px; font-weight: 600; color: var(--text-muted); padding: 8px 0; text-transform: uppercase; }
+.cal-day { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; color: var(--text-primary); background: var(--bg-app); border: 1px solid transparent; transition: var(--transition); cursor: pointer; position: relative; }
+.cal-day:hover { border-color: var(--accent); }
+.cal-day.today { background: var(--accent); color: #fff; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); border-color: var(--accent); }
+.cal-day.has-event::after { content: ''; position: absolute; bottom: 6px; width: 6px; height: 6px; background: var(--danger); border-radius: 50%; }
+.cal-day.today.has-event::after { background: #fff; }
+.cal-day.other-month { color: var(--text-muted); opacity: 0.5; background: transparent; }
+.event-item { display: flex; gap: 16px; padding: 16px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 12px; transition: var(--transition); box-shadow: var(--shadow-sm); align-items: center; }
+.event-date { text-align: center; min-width: 50px; background: var(--bg-app); padding: 8px; border-radius: 8px; }
+.event-date .day { font-size: 24px; font-weight: 700; color: var(--accent); line-height: 1; }
+.event-date .month { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; }
+.event-info { flex: 1; }
+.event-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.step-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; box-shadow: var(--shadow-sm); transition: var(--transition); }
+.step-card.completed { border-left: 4px solid var(--success); }
+.step-card.active { border-left: 4px solid var(--accent); }
+.step-card.pending { border-left: 4px solid var(--border-dark); opacity: 0.8; }
+.step-header { display: flex; align-items: center; gap: 20px; padding: 20px 24px; cursor: pointer; transition: var(--transition); background: #fff; }
+.step-number { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+.step-card.completed .step-number { background: var(--success-dim); color: var(--success); }
+.step-card.active .step-number { background: var(--accent-dim); color: var(--accent); }
+.step-card.pending .step-number { background: var(--bg-app); color: var(--text-muted); }
+.step-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.step-status { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.step-chevron { color: var(--text-muted); transition: transform 0.3s; font-size: 20px; }
+.step-card.open .step-chevron { transform: rotate(180deg); }
+.step-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out; background: #fff; }
+.step-card.open .step-body { max-height: 2500px; border-top: 1px solid var(--border-light); }
+.step-content { padding: 24px; }
+.step-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 32px; }
+.step-section-title { font-size: 13px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; margin-bottom: 16px; }
+.link-list { display: flex; flex-direction: column; gap: 8px; }
+.link-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-app); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; color: var(--text-primary); transition: var(--transition); }
+.link-item:hover { background: #fff; border-color: var(--accent); color: var(--accent); text-decoration: none; transform: translateX(2px); }
+.toast { position: fixed; bottom: 32px; right: 32px; z-index: 9999; background: var(--text-primary); color: #fff; border-radius: var(--radius-sm); padding: 16px 24px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 12px; font-size: 14px; transform: translateY(100px); opacity: 0; transition: all 0.4s ease; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.success { border-left: 4px solid var(--success); }
+.toast.error { border-left: 4px solid var(--danger); }
+.toast.info { border-left: 4px solid var(--accent); }
+.mobile-toggle { display: none; position: fixed; top: 16px; left: 16px; z-index: 200; width: 44px; height: 44px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 20px; align-items: center; justify-content: center; box-shadow: var(--shadow-sm); }
+@media (max-width: 900px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } .main { margin-left: 0; } .mobile-toggle { display: flex; } .page-header { padding: 70px 24px 24px 24px; } .page-header-content { flex-direction: column; gap: 16px; } .page-content { padding: 24px; } .step-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
+<button class="mobile-toggle" onclick="toggleSidebar()">&#9776;</button>
 <div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header"><div class="sidebar-logo"><div class="logo-icon">ES</div><div><h1>MPO Port&#225;l</h1><div class="subtitle">WHC s.r.o.</div></div></div></div>
+  <nav class="sidebar-nav">
+    <div class="nav-section"><div class="nav-section-title">Pr&#367;vodce</div>
+      <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> P&#345;ehled</div>
+      <div class="nav-item" data-page="pipeline" onclick="navigate('pipeline')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg> &#218;koly &amp; Kroky</div>
+      <div class="nav-item" data-page="documents" onclick="navigate('documents')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg> Soubory<span class="nav-badge" id="nav-docs-badge" style="display:none;">0</span></div>
+    </div>
+    <div class="nav-section"><div class="nav-section-title">Pl&#225;nov&#225;n&#237; a studium</div>
+      <div class="nav-item" data-page="calendar" onclick="navigate('calendar')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Kalend&#225;&#345;</div>
+      <div class="nav-item" data-page="exams" onclick="navigate('exams')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/><path d="M12 14v7"/></svg> Zkou&#353;ky</div>
+    </div>
+  </nav>
+  <div class="sidebar-footer">P&#345;ipravil Mat&#283;j Kocanda<br><a href="#" onclick="exportAllData(event)" style="font-weight:normal;">Z&#225;lohovat data</a> &#183; <a href="#" onclick="importData(event)" style="font-weight:normal;">Obnovit</a></div>
+</aside>
+<div class="main">
 
-<!-- Header -->
-<div class="header">
-  <div class="header-top">
-    <div class="logo">WHC</div>
-    <h1>Roadmapa: Energetický specialista MPO</h1>
-  </div>
-  <div class="header-sub">Ivoš &mdash; průvodce krok za krokem &nbsp;|&nbsp; WHC s.r.o. &nbsp;|&nbsp; Březen 2026</div>
-</div>
-
-<!-- Pipeline -->
-<div class="pipeline" id="pipeline"></div>
-
-<!-- Progress -->
-<div class="prog-wrap">
-  <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
-  <div class="prog-txt" id="prog-txt">0 % hotovo</div>
-</div>
-
-<!-- Detail -->
-<div class="detail" id="detail"></div>
-
-<!-- Google Drive kartotéka -->
-<div class="drive-card">
-  <div class="drive-header">
-    <div class="drive-icon">&#128193;</div>
-    <div>
-      <div class="drive-title">Sdílená složka na Google Disku – kartotéka dokumentů</div>
-      <div style="font-size:12px;color:#888;margin-top:1px">Ivoš sem nahrává scany, Matěj sem dává formuláře ke stažení</div>
-    </div>
-  </div>
-  <div class="folder-grid">
-    <div class="folder">
-      <div class="folder-name">&#128196; Formuláře ke stažení</div>
-      <div class="folder-sub">Žádost FO, žádost PO (doplní Matěj)</div>
-    </div>
-    <div class="folder">
-      <div class="folder-name">&#128247; Ivoš – scany dokladů</div>
-      <div class="folder-sub">Vysvědčení, čestné prohlášení o praxi</div>
-    </div>
-    <div class="folder">
-      <div class="folder-name">&#9989; Podepsané dokumenty</div>
-      <div class="folder-sub">Souhlas určené osoby, potvrzení Czech Point</div>
-    </div>
-    <div class="folder">
-      <div class="folder-name">&#128179; Platby a doklady</div>
-      <div class="folder-sub">Výpis z banky, kolky (foto)</div>
-    </div>
-    <div class="folder">
-      <div class="folder-name">&#128220; Rozhodnutí MPO</div>
-      <div class="folder-sub">Ivošovo + WHC s.r.o. (po udělení)</div>
-    </div>
-    <div class="folder">
-      <div class="folder-name">&#128218; Studijní materiály</div>
-      <div class="folder-sub">Zkušební otázky PDF, okruhy ústní části</div>
+<div class="page active" id="page-dashboard">
+  <div class="page-header"><div class="page-header-content"><div><h2>Ahoj, Ivo&#353;i &#128075;</h2><div class="page-desc">P&#345;ehled postupu &#382;&#225;dosti o autorizaci ES MPO</div></div><div><button class="btn btn-primary" onclick="navigate('pipeline')">Pokra&#269;ovat v &#250;kolech &#8594;</button></div></div></div>
+  <div class="page-content">
+    <img class="hero-banner" src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1400&h=300" alt="Banner">
+    <div class="stats-grid" id="dashboard-stats"></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(400px, 1fr));gap:32px;">
+      <div><div class="card" style="margin-bottom:32px;"><div class="card-header"><div class="card-title">&#127919; Co je pot&#345;eba ud&#283;lat</div></div><div id="dashboard-todos"></div></div><div class="card"><div class="card-header"><div class="card-title">&#128236; Zp&#367;soby doru&#269;en&#237;</div></div><div id="dashboard-delivery"></div></div></div>
+      <div><div class="card"><div class="card-header"><div class="card-title">&#128197; Bl&#237;&#382;&#237;c&#237; se term&#237;ny</div></div><div id="dashboard-events"></div></div></div>
     </div>
   </div>
 </div>
 
-<div class="footer">WHC s.r.o. &copy; 2026 &nbsp;&middot;&nbsp; Interní dokument &nbsp;&middot;&nbsp; Připravil Matěj Kocanda, MBA<br>
-<a href="https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/" target="_blank">mpo.gov.cz – energetičtí specialisté</a> &nbsp;&middot;&nbsp;
-<a href="https://sei.gov.cz/?p=9686" target="_blank">SEI – termíny zkoušek</a> &nbsp;&middot;&nbsp;
-<a href="https://www.mpo-enex.cz/experti" target="_blank">ENEX – seznam ES</a>
+<div class="page" id="page-pipeline">
+  <div class="page-header"><div class="page-header-content"><div><h2>&#218;koly a kroky</h2><div class="page-desc">Pr&#367;vodce procesem z&#237;sk&#225;n&#237; autorizace, krok za krokem.</div></div><div class="progress-container"><div class="progress-header"><span>Celkov&#253; postup</span><span id="pipeline-progress-text" style="color:var(--accent);"></span></div><div class="progress-bar"><div class="fill" id="pipeline-progress-fill"></div></div></div></div></div>
+  <div class="page-content" id="pipeline-steps"></div>
 </div>
+
+<div class="page" id="page-documents">
+  <div class="page-header"><div class="page-header-content"><div><h2>Soubory a dokumenty</h2><div class="page-desc">P&#345;ehledn&#283; ulo&#382;en&#233; materi&#225;ly podle jednotliv&#253;ch krok&#367;.</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" onclick="downloadAllFiles()">St&#225;hnout v&#353;e</button><button class="btn btn-primary" onclick="showUploadModal()">+ Nahr&#225;t soubor</button></div></div></div>
+  <div class="page-content"><div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(350px, 1fr));gap:24px;" id="documents-content"></div></div>
 </div>
+
+<div class="page" id="page-calendar">
+  <div class="page-header"><div class="page-header-content"><div><h2>Kalend&#225;&#345;</h2><div class="page-desc">Sledujte term&#237;ny zkou&#353;ek a d&#367;le&#382;it&#233; deadliny.</div></div><button class="btn btn-primary" onclick="showEventModal()">+ P&#345;idat ud&#225;lost</button></div></div>
+  <div class="page-content"><div style="display:grid;grid-template-columns:2fr 1fr;gap:32px;"><div class="card"><div class="card-header"><button class="btn btn-secondary btn-icon" onclick="changeMonth(-1)">&#8592;</button><div class="card-title" id="cal-month-title" style="font-size:18px;"></div><button class="btn btn-secondary btn-icon" onclick="changeMonth(1)">&#8594;</button></div><div class="calendar-grid" id="calendar-grid"></div></div><div class="card"><div class="card-title" style="margin-bottom:20px;">Nadch&#225;zej&#237;c&#237;</div><div id="events-list"></div></div></div></div>
+</div>
+
+<div class="page" id="page-exams">
+  <div class="page-header"><div class="page-header-content"><div><h2>Zkou&#353;ky a studium</h2><div class="page-desc">V&#353;e pot&#345;ebn&#233; pro p&#345;&#237;pravu k odborn&#253;m zkou&#353;k&#225;m.</div></div></div></div>
+  <div class="page-content">
+    <img class="hero-banner" style="height:140px;margin-bottom:32px;" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&q=80&w=1400&h=200" alt="Study">
+    <div class="stats-grid"><div class="stat-card"><div class="stat-header-row"><div class="stat-icon" style="background:var(--info-dim);color:var(--info);">&#128221;</div><div class="stat-label">P&#237;semn&#225; &#269;&#225;st</div></div><div class="stat-value" id="exam-written-status" style="font-size:24px;">&#8211;</div></div><div class="stat-card"><div class="stat-header-row"><div class="stat-icon" style="background:var(--purple-dim);color:var(--purple);">&#128483;&#65039;</div><div class="stat-label">&#218;stn&#237; &#269;&#225;st</div></div><div class="stat-value" id="exam-oral-status" style="font-size:24px;">&#8211;</div></div><div class="stat-card"><div class="stat-header-row"><div class="stat-icon" style="background:var(--success-dim);color:var(--success);">&#127891;</div><div class="stat-label">Autorizace</div></div><div class="stat-value" id="exam-cert-status" style="font-size:24px;">&#8211;</div></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;"><div class="card"><div class="card-title" style="margin-bottom:20px;">&#128218; Materi&#225;ly ke studiu</div><div class="upload-zone" onclick="document.getElementById('exam-file-input').click()" id="exam-upload-zone"><div class="upload-icon">&#128214;</div><div class="upload-text">Klikni nebo p&#345;et&#225;hni soubory</div><div class="upload-hint">PDF, Word, prezentace, v&#253;pisky</div><input type="file" id="exam-file-input" multiple style="display:none" onchange="handleExamUpload(event)"></div><div id="exam-files-list" style="margin-top:20px;"></div></div><div class="card" style="display:flex;flex-direction:column;"><div class="card-title" style="margin-bottom:20px;">&#128203; Osobn&#237; pozn&#225;mky</div><textarea class="input" id="exam-notes" placeholder="Zapisuj si d&#367;le&#382;it&#233; body, ot&#225;zky na konzultaci..." style="flex:1;resize:none;min-height:250px;background:#fff;margin-bottom:0;" oninput="saveExamNotes()"></textarea></div></div>
+  </div>
+</div>
+
+</div></div>
+
+<div class="modal-overlay" id="upload-modal"><div class="modal"><div class="modal-header"><div class="modal-title">Nahr&#225;t dokument</div><div class="modal-close" onclick="closeModal('upload-modal')">&#10005;</div></div><div class="modal-body"><label class="input-label">P&#345;i&#345;adit ke kroku</label><select class="input" id="upload-step-select" style="cursor:pointer;"></select><div class="upload-zone" id="modal-upload-zone" onclick="document.getElementById('modal-file-input').click()"><div class="upload-icon">&#128193;</div><div class="upload-text">Vybrat soubory z po&#269;&#237;ta&#269;e</div><div class="upload-hint">nebo je sem p&#345;et&#225;hn&#283;te my&#353;&#237;</div><input type="file" id="modal-file-input" multiple style="display:none" onchange="handleModalUpload(event)"></div><div id="modal-file-preview" style="margin-top:16px;"></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('upload-modal')">Zru&#353;it</button><button class="btn btn-primary" onclick="confirmUpload()">Nahr&#225;t soubory</button></div></div></div>
+
+<div class="modal-overlay" id="event-modal"><div class="modal"><div class="modal-header"><div class="modal-title">P&#345;idat do kalend&#225;&#345;e</div><div class="modal-close" onclick="closeModal('event-modal')">&#10005;</div></div><div class="modal-body"><label class="input-label">N&#225;zev ud&#225;losti</label><input class="input" id="event-title-input" placeholder="Nap&#345;. P&#237;semn&#225; zkou&#353;ka SEI"><div style="display:flex;gap:16px;"><div style="flex:1;"><label class="input-label">Datum</label><input class="input" id="event-date-input" type="date"></div><div style="flex:1;"><label class="input-label">Typ</label><select class="input" id="event-type-input"><option value="exam">Zkou&#353;ka</option><option value="deadline">Deadline</option><option value="training">&#352;kolen&#237;</option><option value="other">Jin&#233;</option></select></div></div><div style="margin-top:16px;"><label class="input-label">Pozn&#225;mka</label><input class="input" id="event-note-input" placeholder="Voliteln&#225; pozn&#225;mka"></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('event-modal')">Zru&#353;it</button><button class="btn btn-primary" onclick="saveEvent()">Ulo&#382;it</button></div></div></div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-var checked={};
-var STEPS=[
-  {id:0,emoji:"📂",label:"Doklady",sub:"1–2 týdny",color:"#1B4F8A",bg:"#E6F1FB",title:"Shromáždění dokladů",desc:"Připrav vše před odesláním žádosti",
-   alert:{type:"orange",text:"Ing. titul (ekonomická VŠ) MPO neakceptuje. Relevantní je SŠ stavební průmyslovka → 6 let praxe v oboru stavebnictví nebo energetiky."},
-   info:[
-     {k:"Vysvědčení",v:"Maturitní vysvědčení – stavební průmyslovka. Prostá kopie, není nutné úředně ověřovat."},
-     {k:"Výpis z RT",v:"Občané ČR NEDOKLÁDAJÍ – MPO si ověří sám přes ISZR automaticky."},
-     {k:"Praxe (OSVČ)",v:"Čestné prohlášení (vlastnoruční podpis + datum). Obsah: jméno, IČO, popis činnosti v oboru stavebnictví/energetiky, rozsah od–do, celkem X let."},
-     {k:"Praxe (zaměstnanec)",v:"Potvrzení zaměstnavatele: název firmy, IČO, popis práce, doba pracovního poměru. Podpis + razítko."},
-   ],
-   checks:["Najít maturitní vysvědčení (nebo požádat školu o duplikát)","Připravit čestné prohlášení o praxi (min. 6 let)","Zkontrolovat: mám aktivní datovou schránku fyzické osoby?"],
-   links:[]},
-  {id:1,emoji:"🏦",label:"Platba",sub:"internet banking",color:"#185FA5",bg:"#E6F1FB",title:"Správní poplatek – platba",desc:"Zaplatit PŘED odesláním žádosti",
-   alert:{type:"blue",text:"MPO nevydává příjmový doklad. Pro účetnictví WHC stačí výpis z internetového bankovnictví (PDF nebo screenshot)."},
-   info:[
-     {k:"Příjemce",v:"Ministerstvo průmyslu a obchodu ČR"},
-     {k:"Číslo účtu",v:"3711-1525001 / 0710  (ČNB)"},
-     {k:"Var. symbol",v:"41300"},
-     {k:"Zpráva",v:"správní poplatek k žádosti o udělení oprávnění ES"},
-     {k:"Výše (typ B)",v:"1 000 Kč za PENB  |  Typ A+B = 2 000 Kč (doporučujeme!)"},
-     {k:"Alternativa",v:"Kolkové známky 1 000 Kč/typ – koupit na poště nebo Czech Point"},
-   ],
-   checks:["Odeslat platbu přes internetové bankovnictví na účet MPO","Uložit PDF výpis nebo screenshot jako doklad o platbě"],
-   links:[]},
-  {id:2,emoji:"📬",label:"Žádost MPO",sub:"ihned podat",color:"#1F6B4E",bg:"#EAF3DE",title:"Podání žádosti na MPO",desc:"Vyplnit formulář a odeslat s přílohami",
-   alert:{type:"green",text:"Doporučujeme datovou schránku – nejrychlejší, prokazatelné datum podání. ID schránky MPO: bxtaaw4"},
-   info:[
-     {k:"Formulář",v:"Stáhnout ze stránek MPO:",link:"https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/jak-se-stat-energetickym-specialistou/jak-se-stat-energetickym-specialistou--277126/",linkTxt:"↗ mpo.gov.cz – formulář žádosti FO"},
-     {k:"Online žádost",v:"ENEX systém:",link:"https://www.mpo-enex.cz/registrace/",linkTxt:"↗ mpo-enex.cz/registrace"},
-     {k:"DS MPO ID",v:"bxtaaw4"},
-     {k:"Poštou",v:"MPO, Odbor en. účinnosti a úspor, Na Františku 32, 110 15 Praha 1"},
-     {k:"Přílohy",v:"1) Vyplněný formulář  2) Kopie vysvědčení  3) Doložení praxe  4) Doklad o platbě"},
-     {k:"Lhůta",v:"Zkoušku musíš vykonat do 12 měsíců od podání žádosti"},
-   ],
-   checks:["Stáhnout a vyplnit formulář žádosti fyzické osoby","Zaškrtnout oprávnění B (PENB) – volitelně přidat A (audit)","Zkompletovat přílohy (vysvědčení, praxe, doklad o platbě)","Odeslat datovou schránkou na ID: bxtaaw4"],
-   links:[{url:"https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/jak-se-stat-energetickym-specialistou/jak-se-stat-energetickym-specialistou--277126/",txt:"MPO – formulář žádosti",color:"#1B4F8A"},{url:"https://www.mpo-enex.cz/registrace/",txt:"ENEX – online žádost",color:"#1F6B4E"},{url:"https://www.czechpoint.cz/public/",txt:"Czech Point – aktivace DS",color:"#185FA5"}]},
-  {id:3,emoji:"📚",label:"Studium",sub:"2–3 měsíce",color:"#854F0B",bg:"#FAEEDA",title:"Studium a příprava",desc:"Čas od podání žádosti do pozvánky od SEI",
-   alert:{type:"orange",text:"Zkušební otázky pro písemnou část jsou veřejné na webu MPO – stejná sada se používá u zkoušky. Memorovat odpovědi je legitimní přístup."},
-   info:[
-     {k:"Otázky písemná",v:"Typ B (PENB): 50 otázek. Stáhnout PDF z MPO.",link:"https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/jak-se-stat-energetickym-specialistou/jak-se-stat-energetickym-specialistou--277126/",linkTxt:"↗ Zkušební otázky na mpo.gov.cz"},
-     {k:"Okruhy ústní",v:"Tematické okruhy ke stažení z MPO/SEI.",link:"https://sei.gov.cz/?page_id=9487",linkTxt:"↗ sei.gov.cz – tematické okruhy"},
-     {k:"Kurz AEA",v:"8 dní, 58 hod., cca 10–15 tis. Kč (doporučeno).",link:"https://www.aea.cz/vzdelavaci-akce/osmidenni-pripravny-kurz-ke-slozeni-zkousek",linkTxt:"↗ aea.cz – přípravný kurz"},
-     {k:"Kurz ČKAIT",v:"Pro členy ČKAIT – kombinace PENB + audit.",link:"https://www.ckait.cz/content/pripravny-kurz-pro-odborne-zkousky-energetickych-specialistu",linkTxt:"↗ ckait.cz – kurz ES"},
-     {k:"Legislativa",v:"Zákon č. 406/2000 Sb. + vyhláška č. 264/2020 Sb. (ENB) + ČSN EN ISO 52000-1"},
-   ],
-   checks:["Stáhnout zkušební otázky pro typ B (PENB) z webu MPO","Stáhnout tematické okruhy ústní části (SEI/MPO)","Přihlásit se na přípravný kurz AEA nebo ČKAIT","Prostudovat zákon 406/2000 Sb. a vyhlášku 264/2020 Sb."],
-   links:[{url:"https://www.aea.cz/vzdelavaci-akce/osmidenni-pripravny-kurz-ke-slozeni-zkousek",txt:"AEA – přípravný kurz",color:"#854F0B"},{url:"https://www.ckait.cz/content/pripravny-kurz-pro-odborne-zkousky-energetickych-specialistu",txt:"ČKAIT – kurz ES",color:"#3B6D11"}]},
-  {id:4,emoji:"✏️",label:"Zkouška",sub:"1 den Praha",color:"#C45911",bg:"#FEF0E6",title:"Odborná zkouška – den D",desc:"SEI pošle pozvánku min. 30 dní předem",
-   alert:{type:"orange",text:"1 opravný pokus v rámci jedné žádosti. Neúspěch v písemné → celá zkouška znovu. Neúspěch jen v ústní → pouze ústní v náhradním termínu."},
-   info:[
-     {k:"Místo",v:"MPO – Na Františku 32, 110 15 Praha 1 (počítačová učebna)"},
-     {k:"Písemná část",v:"50 otázek | 60 minut | min. 75 % = aspoň 38 správných odpovědí"},
-     {k:"Ústní část",v:"Los 3 tematických okruhů → rozprava před komisí SEI/MPO"},
-     {k:"Termíny 2026",v:"29. 4. / 13. 5. / 3. 6. / 17. 6. / 2. 7. / 26. 8.",link:"https://sei.gov.cz/?p=9686",linkTxt:"↗ Všechny termíny na sei.gov.cz"},
-     {k:"Co vzít s sebou",v:"Občanský průkaz. Pomůcky dle pokynů komise."},
-   ],
-   checks:["Zkontrolovat pozvánku od SEI (datum, místo, tematické okruhy)","Dorazit na MPO Na Františku 32, Praha 1 v určený čas s OP","Složit písemný test (50 otázek, 60 min, min. 75 %)","Složit ústní část (3 losované okruhy před komisí)"],
-   links:[{url:"https://sei.gov.cz/?p=9686",txt:"SEI – termíny zkoušek 2026",color:"#C45911"}]},
-  {id:5,emoji:"🏆",label:"Oprávnění",sub:"30 dní + PM",color:"#6B3A8A",bg:"#EEEDFE",title:"Rozhodnutí MPO a oprávnění",desc:"Automaticky po složení zkoušky",
-   alert:{type:"blue",text:"Ivoš se může vzdát práva na odvolání písemně → rozhodnutí nabude právní moci okamžitě (nemusí čekat 15 dní). Zkrátí to čekání o 2 týdny."},
-   info:[
-     {k:"Rozhodnutí MPO",v:"Do 30 dní od zkoušky – doručeno poštou nebo do datové schránky"},
-     {k:"Lhůta odvolání",v:"15 dní. Vzdání se odvolání písemně → PM okamžitě."},
-     {k:"Právní moc (PM)",v:"16. den od doručení (nebo dříve při vzdání se odvolání)"},
-     {k:"Zápis v Seznamu ES",v:"Automaticky po PM",link:"https://www.mpo-enex.cz/experti",linkTxt:"↗ mpo-enex.cz/experti"},
-     {k:"ENEX přihlášení",v:"MPO zašle přihlašovací údaje spolu s rozhodnutím"},
-     {k:"Platnost oprávnění",v:"3 roky. 3 měsíce před koncem → přihlásit kurz průběžného vzdělávání přes ENEX (min. 18 kreditů / 3 roky)"},
-     {k:"WHC s.r.o.",v:"Ivoš = Určená osoba → WHC podá vlastní žádost jako PO. Přílohy: rozhodnutí Ivoše + doklad o pracovním poměru + jeho souhlas. MPO vydá do 30 dní, bez zkoušky."},
-   ],
-   checks:["Přijmout rozhodnutí MPO (nebo se vzdát odvolání pro urychlení PM)","Přihlásit se do ENEX přes přihlašovací údaje od MPO","Ověřit zápis na mpo-enex.cz/experti","Předat Matějovi podklady pro žádost WHC s.r.o. jako PO"],
-   links:[{url:"https://www.mpo-enex.cz/experti",txt:"ENEX – seznam ES",color:"#6B3A8A"}]}
-];
-
-var current=0;
-
-function getProgress(idx){
-  var s=STEPS[idx];
-  if(!s.checks||!s.checks.length)return 0;
-  var done=0;
-  for(var j=0;j<s.checks.length;j++){if(checked[idx+'_'+j])done++;}
-  return Math.round(100*done/s.checks.length);
-}
-
-function getTotalProgress(){
-  var total=0,done=0;
-  for(var i=0;i<STEPS.length;i++){
-    var s=STEPS[i];
-    if(!s.checks)continue;
-    total+=s.checks.length;
-    for(var j=0;j<s.checks.length;j++){if(checked[i+'_'+j])done++;}
-  }
-  return total?Math.round(100*done/total):0;
-}
-
-function renderPipeline(){
-  var el=document.getElementById('pipeline');
-  var html='';
-  for(var i=0;i<STEPS.length;i++){
-    var s=STEPS[i];
-    var act=i===current?' active':'';
-    var pct=getProgress(i);
-    var dotStyle='background:'+s.bg+';border-color:'+(i===current?s.color:'transparent')+';';
-    html+='<div class="pip-step'+act+'" onclick="goTo('+i+')">';
-    html+='<div class="pip-dot" style="'+dotStyle+'">';
-    if(pct===100)html+='<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l4 4 6-7" fill="none" stroke="'+s.color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    else html+=s.emoji;
-    html+='</div>';
-    html+='<div class="pip-lbl">'+s.label+'</div>';
-    html+='<div class="pip-sub">'+s.sub+'</div>';
-    html+='</div>';
-    if(i<STEPS.length-1)html+='<div class="pip-arr">›</div>';
-  }
-  el.innerHTML=html;
-}
-
-function renderProgress(){
-  var pct=getTotalProgress();
-  var fill=document.getElementById('prog-fill');
-  var txt=document.getElementById('prog-txt');
-  fill.style.width=pct+'%';
-  fill.style.background=STEPS[current].color;
-  txt.textContent=pct+' % hotovo';
-}
-
-function renderDetail(){
-  var s=STEPS[current];
-  var pct=getProgress(current);
-  var el=document.getElementById('detail');
-  var html='';
-
-  // Header
-  html+='<div class="det-header">';
-  html+='<div class="det-num" style="background:'+s.bg+';color:'+s.color+'">'+(current+1)+'</div>';
-  html+='<div><div class="det-title">'+s.title+'</div><div class="det-sub">'+s.desc+'</div></div>';
-  html+='<div class="det-pct">'+pct+'&nbsp;%</div>';
-  html+='</div>';
-  html+='<div class="det-body">';
-
-  // Alert
-  if(s.alert){
-    html+='<div class="alert '+s.alert.type+'">'+s.alert.text+'</div>';
-  }
-
-  // Info
-  if(s.info&&s.info.length){
-    html+='<div><div class="sec-lbl">Klíčové informace</div>';
-    html+='<div class="info-tbl">';
-    for(var i=0;i<s.info.length;i++){
-      var row=s.info[i];
-      html+='<div class="info-row"><div class="info-key">'+row.k+'</div><div class="info-val">'+row.v;
-      if(row.link)html+='<a href="'+row.link+'" target="_blank">'+row.linkTxt+'</a>';
-      html+='</div></div>';
-    }
-    html+='</div></div>';
-  }
-
-  // Checklist
-  if(s.checks&&s.checks.length){
-    html+='<div><div class="sec-lbl">Můj checklist</div><div class="cl-wrap">';
-    for(var j=0;j<s.checks.length;j++){
-      var key=current+'_'+j;
-      var done=checked[key];
-      html+='<div class="cl-item'+(done?' checked':'')+'" onclick="toggleCheck('+current+','+j+')">';
-      html+='<div class="cl-box'+(done?' done':'')+'" style="'+(done?'background:'+s.color+';border-color:'+s.color:'')+'"></div>';
-      html+='<div class="cl-txt">'+s.checks[j]+'</div>';
-      html+='</div>';
-    }
-    html+='</div></div>';
-  }
-
-  // Links
-  if(s.links&&s.links.length){
-    html+='<div><div class="sec-lbl">Užitečné odkazy</div><div class="chips">';
-    for(var k=0;k<s.links.length;k++){
-      var lnk=s.links[k];
-      html+='<a class="chip" href="'+lnk.url+'" target="_blank"><span class="chip-dot" style="background:'+lnk.color+'"></span>'+lnk.txt+'</a>';
-    }
-    html+='</div></div>';
-  }
-
-  // Nav
-  html+='<div class="det-nav">';
-  if(current>0)html+='<button class="btn" onclick="goTo('+(current-1)+')">← Předchozí</button>';
-  if(current<STEPS.length-1)html+='<button class="btn primary" onclick="goTo('+(current+1)+')">Další krok →</button>';
-  else html+='<button class="btn primary" onclick="window.open(\'https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/\',\'_blank\')">Přejít na MPO →</button>';
-  html+='</div>';
-
-  html+='</div>';
-  el.innerHTML=html;
-}
-
-function goTo(idx){
-  current=idx;
-  renderPipeline();
-  renderProgress();
-  renderDetail();
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function toggleCheck(stepIdx,checkIdx){
-  var key=stepIdx+'_'+checkIdx;
-  checked[key]=!checked[key];
-  renderDetail();
-  renderPipeline();
-  renderProgress();
-}
-
-goTo(0);
+var STEPS=[{id:1,title:'Doklady a kvalifikace',desc:'Shrom\u00e1\u017ed\u011bn\u00ed v\u0161ech pot\u0159ebn\u00fdch doklad\u016f o vzd\u011bl\u00e1n\u00ed a kvalifikaci.',checklist:[{id:'c1_1',text:'Kopie vysv\u011bd\u010den\u00ed/diplomu (st\u0159edn\u00ed stavebn\u00ed \u0161kola)',required:true,delivery:null},{id:'c1_2',text:'Kopie diplomu Ing. (ekonomie) \u2013 pouze dopl\u0148kov\u011b',required:false,delivery:null},{id:'c1_3',text:'V\u00fdpis z rejst\u0159\u00edku trest\u016f (ne star\u0161\u00ed 3 m\u011bs\u00edce)',required:true,delivery:null},{id:'c1_4',text:'\u010cestn\u00e9 prohl\u00e1\u0161en\u00ed o bez\u00fahonnosti',required:true,delivery:null},{id:'c1_5',text:'Doklad toto\u017enosti (kopie OP)',required:true,delivery:null}],links:[{title:'Czech POINT \u2013 v\u00fdpis z RT',url:'https://www.czechpoint.cz/'},{title:'MPO \u2013 podm\u00ednky autorizace',url:'https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/'}],folderName:'01_doklady_kvalifikace'},{id:2,title:'Profesn\u00ed praxe (6 let)',desc:'Prok\u00e1z\u00e1n\u00ed minim\u00e1ln\u011b 6 let odborn\u00e9 praxe v oboru energetiky nebo stavebnictv\u00ed.',checklist:[{id:'c2_1',text:'Potvrzen\u00ed od zam\u011bstnavatele/\u016f o praxi (6 let)',required:true,delivery:null},{id:'c2_2',text:'\u010cestn\u00e9 prohl\u00e1\u0161en\u00ed o d\u00e9lce a obsahu praxe',required:true,delivery:null},{id:'c2_3',text:'Reference na realizovan\u00e9 projekty',required:false,delivery:null},{id:'c2_4',text:'Souhlas ur\u010den\u00e9 osoby (pro PO \u2013 WHC s.r.o.)',required:true,delivery:null}],links:[{title:'Vzor \u010destn\u00e9ho prohl\u00e1\u0161en\u00ed',url:'#'}],folderName:'02_profesni_praxe'},{id:3,title:'Administrativn\u00ed poplatky',desc:'\u00dahrada spr\u00e1vn\u00edho poplatku za p\u0159ijet\u00ed \u017e\u00e1dosti a kolky.',checklist:[{id:'c3_1',text:'Spr\u00e1vn\u00ed poplatek 1 500 K\u010d (kolek / p\u0159evod)',required:true,delivery:'banka'},{id:'c3_2',text:'Doklad o zaplacen\u00ed (v\u00fdpis / foto kolku)',required:true,delivery:null}],links:[{title:'MPO \u2013 poplatky a kolky',url:'https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/'}],folderName:'03_poplatky'},{id:4,title:'Pod\u00e1n\u00ed \u017e\u00e1dosti na MPO',desc:'Sestaven\u00ed a odesl\u00e1n\u00ed kompletn\u00ed \u017e\u00e1dosti prost\u0159ednictv\u00edm datov\u00e9 schr\u00e1nky.',checklist:[{id:'c4_1',text:'Vyplnit formul\u00e1\u0159 \u017e\u00e1dosti FO (fyzick\u00e1 osoba)',required:true,delivery:'datovka'},{id:'c4_2',text:'P\u0159ilo\u017eit v\u0161echny dokumenty z krok\u016f 1\u20133',required:true,delivery:'datovka'},{id:'c4_3',text:'Odeslat \u017e\u00e1dost datovou schr\u00e1nkou (ID: bxtaaw4)',required:true,delivery:'datovka'},{id:'c4_4',text:'\u017d\u00e1dost PO pro WHC s.r.o. (po autorizaci FO)',required:false,delivery:'datovka'}],links:[{title:'DS MPO \u2013 ID: bxtaaw4',url:'https://www.mojedatovaschranka.cz/'},{title:'Formul\u00e1\u0159 \u017e\u00e1dosti FO (PDF)',url:'#'}],folderName:'04_podani_zadosti'},{id:5,title:'P\u0159\u00edprava na zkou\u0161ky',desc:'Studium okruh\u016f, p\u0159ihl\u00e1\u0161en\u00ed ke zkou\u0161ce u SEI, p\u0159\u00edprava materi\u00e1l\u016f.',checklist:[{id:'c5_1',text:'St\u00e1hnout zku\u0161ebn\u00ed okruhy z webu SEI',required:true,delivery:null},{id:'c5_2',text:'Prostudovat z\u00e1kon \u010d. 406/2000 Sb.',required:true,delivery:null},{id:'c5_3',text:'Prostudovat vyhl\u00e1\u0161ku \u010d. 480/2012 Sb.',required:true,delivery:null},{id:'c5_4',text:'P\u0159ihl\u00e1sit se k term\u00ednu zkou\u0161ky u SEI',required:true,delivery:'email'},{id:'c5_5',text:'P\u0159ipravit se na \u00fastn\u00ed zkou\u0161ku (okruhy)',required:true,delivery:null}],links:[{title:'SEI \u2013 term\u00edny zkou\u0161ek',url:'https://sei.gov.cz/?p=9686'},{title:'Z\u00e1kon 406/2000 Sb.',url:'https://www.zakonyprolidi.cz/cs/2000-406'},{title:'Vyhl\u00e1\u0161ka 480/2012 Sb.',url:'https://www.zakonyprolidi.cz/cs/2012-480'}],folderName:'05_priprava_zkousky'},{id:6,title:'Zkou\u0161ky a autorizace',desc:'Absolvov\u00e1n\u00ed p\u00edsemn\u00e9 a \u00fastn\u00ed zkou\u0161ky, p\u0159evzet\u00ed osv\u011bd\u010den\u00ed o autorizaci.',checklist:[{id:'c6_1',text:'Absolvovat p\u00edsemnou zkou\u0161ku (test)',required:true,delivery:'osobne'},{id:'c6_2',text:'Absolvovat \u00fastn\u00ed zkou\u0161ku',required:true,delivery:'osobne'},{id:'c6_3',text:'P\u0159evz\u00edt rozhodnut\u00ed MPO o autorizaci',required:true,delivery:null},{id:'c6_4',text:'Zaevidovat se na MPO ENEX',required:true,delivery:null},{id:'c6_5',text:'Podat \u017e\u00e1dost PO (WHC s.r.o.) s ur\u010denou osobou',required:false,delivery:'datovka'}],links:[{title:'ENEX \u2013 registrace',url:'https://www.mpo-enex.cz/experti'},{title:'SEI \u2013 informace o pr\u016fb\u011bhu zkou\u0161ek',url:'https://sei.gov.cz/?p=9686'}],folderName:'06_zkousky_autorizace'}];
+var DL={datovka:{label:'Datov\u00e1 schr\u00e1nka',class:'delivery-datovka',icon:'\ud83d\udce8'},post:{label:'Po\u0161tou',class:'delivery-post',icon:'\ud83d\udcee'},email:{label:'E-mailem',class:'delivery-email',icon:'\ud83d\udce7'},osobne:{label:'Osobn\u011b',class:'delivery-osobne',icon:'\ud83e\udd1d'},banka:{label:'Bankovn\u00ed p\u0159evod',class:'delivery-banka',icon:'\ud83c\udfe6'}};
+var db;function initDB(){return new Promise(function(ok,no){var r=indexedDB.open('es_mpo_portal',1);r.onerror=function(){no(r.error)};r.onsuccess=function(){db=r.result;ok(db)};r.onupgradeneeded=function(e){var d=e.target.result;if(!d.objectStoreNames.contains('files')){var f=d.createObjectStore('files',{keyPath:'id',autoIncrement:true});f.createIndex('stepId','stepId');f.createIndex('folder','folder')}if(!d.objectStoreNames.contains('state'))d.createObjectStore('state',{keyPath:'key'});if(!d.objectStoreNames.contains('events'))d.createObjectStore('events',{keyPath:'id',autoIncrement:true});if(!d.objectStoreNames.contains('examFiles'))d.createObjectStore('examFiles',{keyPath:'id',autoIncrement:true})}})}
+function dbP(s,d){return new Promise(function(ok,no){var t=db.transaction(s,'readwrite');var r=t.objectStore(s).put(d);r.onsuccess=function(){ok(r.result)};r.onerror=function(){no(r.error)}})}
+function dbG(s,k){return new Promise(function(ok,no){var r=db.transaction(s,'readonly').objectStore(s).get(k);r.onsuccess=function(){ok(r.result)};r.onerror=function(){no(r.error)}})}
+function dbA(s){return new Promise(function(ok,no){var r=db.transaction(s,'readonly').objectStore(s).getAll();r.onsuccess=function(){ok(r.result)};r.onerror=function(){no(r.error)}})}
+function dbD(s,k){return new Promise(function(ok,no){var r=db.transaction(s,'readwrite').objectStore(s).delete(k);r.onsuccess=function(){ok()};r.onerror=function(){no(r.error)}})}
+var S={checklist:{},manualCheck:{}};var cM,cY;
+async function lS(){var s=await dbG('state','appState');if(s)S=s.value}
+async function sS(){await dbP('state',{key:'appState',value:S})}
+function iC(id){return S.checklist[id]||S.manualCheck[id]||false}
+async function tC(id){S.checklist[id]=!iC(id);if(S.manualCheck[id])delete S.manualCheck[id];await sS();rA()}
+async function tM(id){if(S.manualCheck[id]){delete S.manualCheck[id];delete S.checklist[id]}else{S.manualCheck[id]=true;S.checklist[id]=true}await sS();rA()}
+function navigate(p){document.querySelectorAll('.page').forEach(function(e){e.classList.remove('active')});document.querySelectorAll('.nav-item[data-page]').forEach(function(n){n.classList.remove('active')});var el=document.getElementById('page-'+p);if(el)el.classList.add('active');var nav=document.querySelector('.nav-item[data-page="'+p+'"]');if(nav)nav.classList.add('active');window.location.hash=p;if(p==='calendar')rCal();if(p==='documents')rDoc();if(p==='exams')rEx();document.getElementById('sidebar').classList.remove('open')}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+async function rD(){var af=await dbA('files');var tc=STEPS.reduce(function(a,s){return a+s.checklist.length},0);var dc=STEPS.reduce(function(a,s){return a+s.checklist.filter(function(c){return iC(c.id)}).length},0);var rc=STEPS.reduce(function(a,s){return a+s.checklist.filter(function(c){return c.required}).length},0);var dr=STEPS.reduce(function(a,s){return a+s.checklist.filter(function(c){return c.required&&iC(c.id)}).length},0);var pct=tc?Math.round(dc/tc*100):0;
+document.getElementById('dashboard-stats').innerHTML='<div class="stat-card"><div class="stat-header-row"><div class="stat-icon" style="background:var(--accent-dim);color:var(--accent);">\ud83d\udcc8</div><div class="stat-label">Celkov\u00fd progres</div></div><div class="stat-value" style="color:var(--accent);">'+pct+'%</div><div class="progress-bar" style="margin-top:16px;height:6px;"><div class="fill" style="width:'+pct+'%"></div></div></div><div class="stat-card"><div class="stat-header-row"><div class="stat-icon" style="background:var(--success-dim);color:var(--success);">\u2713</div><div class="stat-label">Spln\u011bn\u00e9 \u00fakoly</div></div><div class="stat-value">'+dc+'<span style="font-size:16px;color:var(--text-muted);font-weight:500;">/'+tc+'</span></div></div><div class="stat-card"><div class="stat-header-row"><div class="stat-icon" style="background:var(--warning-dim);color:var(--warning);">\ud83c\udfaf</div><div class="stat-label">Zb\u00fdv\u00e1 povinn\u00fdch</div></div><div class="stat-value">'+(rc-dr)+'</div></div><div class="stat-card"><div class="stat-header-row"><div class="stat-icon" style="background:var(--purple-dim);color:var(--purple);">\ud83d\udcc4</div><div class="stat-label">Nahran\u00fdch soubor\u016f</div></div><div class="stat-value">'+af.length+'</div></div>';
+var td=[];STEPS.forEach(function(s){s.checklist.forEach(function(c){if(!iC(c.id)&&c.required)td.push({step:s.id,id:c.id,text:c.text,delivery:c.delivery})})});
+document.getElementById('dashboard-todos').innerHTML=td.length?td.slice(0,6).map(function(t){return'<label class="check-item"><input type="checkbox" '+(iC(t.id)?'checked':'')+' onchange="tC(\''+t.id+'\')"><span class="check-box"></span><div class="check-content"><span class="check-text">'+t.text+'</span><div class="check-row"><span class="tag tag-gray">Krok '+t.step+'</span></div></div></label>'}).join('')+(td.length>6?'<div style="text-align:center;margin-top:12px;"><button class="btn btn-secondary btn-sm" onclick="navigate(\'pipeline\')">Zobrazit v\u0161e ('+td.length+')</button></div>':''):'<div class="empty-state"><img class="empty-image" src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=300&h=300" alt="Hotovo"><div class="empty-text">V\u0161echny povinn\u00e9 \u00fakoly jsou hotov\u00e9! \ud83c\udf89</div></div>';
+var di=[];STEPS.forEach(function(s){s.checklist.forEach(function(c){if(c.delivery&&!iC(c.id))di.push({step:s.id,text:c.text,delivery:c.delivery})})});
+document.getElementById('dashboard-delivery').innerHTML=di.length?di.map(function(d){var l=DL[d.delivery];return'<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border-light);"><span class="delivery-badge '+l.class+'">'+l.icon+' '+l.label+'</span><span style="font-size:14px;flex:1;font-weight:500;">'+d.text+'</span></div>'}).join(''):'<div class="empty-state" style="padding:24px;"><div class="empty-text">Aktu\u00e1ln\u011b nic k odesl\u00e1n\u00ed.</div></div>';
+var ev=await dbA('events');var up=ev.filter(function(e){return new Date(e.date)>=new Date()}).sort(function(a,b){return new Date(a.date)-new Date(b.date)}).slice(0,3);var mn=['led','\u00fano','b\u0159e','dub','kv\u011b','\u010dvn','\u010dvc','srp','z\u00e1\u0159','\u0159\u00edj','lis','pro'];
+document.getElementById('dashboard-events').innerHTML=up.length?up.map(function(e){var d=new Date(e.date);return'<div class="event-item" style="box-shadow:none;border-color:var(--border-light);"><div class="event-date"><div class="day">'+d.getDate()+'</div><div class="month">'+mn[d.getMonth()]+'</div></div><div class="event-info"><div class="event-title">'+e.title+'</div><div class="event-desc">'+(e.note||e.type)+'</div></div></div>'}).join(''):'<div class="empty-state"><div class="empty-text">Zat\u00edm \u017e\u00e1dn\u00e9 term\u00edny</div><button class="btn btn-secondary btn-sm" style="margin-top:12px;" onclick="showEventModal()">P\u0159idat term\u00edn</button></div>';
+var mr=rc-dr;document.getElementById('nav-docs-badge').textContent=mr;document.getElementById('nav-docs-badge').style.display=mr?'':'none'}
+async function rP(){var af=await dbA('files');var tc=STEPS.reduce(function(a,s){return a+s.checklist.length},0);var dc=STEPS.reduce(function(a,s){return a+s.checklist.filter(function(c){return iC(c.id)}).length},0);var pct=tc?Math.round(dc/tc*100):0;document.getElementById('pipeline-progress-text').textContent=pct+'%';document.getElementById('pipeline-progress-fill').style.width=pct+'%';
+document.getElementById('pipeline-steps').innerHTML=STEPS.map(function(step,i){var done=step.checklist.every(function(c){return iC(c.id)});var act=!done&&(i===0||STEPS[i-1].checklist.filter(function(c){return c.required}).every(function(c){return iC(c.id)}));var st=done?'completed':act?'active':'pending';var sf=af.filter(function(f){return f.stepId===step.id});var ds=step.checklist.filter(function(c){return iC(c.id)}).length;
+return'<div class="step-card '+st+'" id="step-'+step.id+'"><div class="step-header" onclick="toggleStep('+step.id+')"><div class="step-number">'+(done?'\u2713':step.id)+'</div><div><div class="step-title">'+step.title+'</div><div style="font-size:13px;color:var(--text-muted);">'+step.desc+'</div></div><div class="step-status"><span class="tag '+(st==='completed'?'tag-success':st==='active'?'tag-warning':'tag-gray')+'">'+ds+' / '+step.checklist.length+' hotovo</span>'+(sf.length?'<span class="tag tag-purple">\ud83d\udcce '+sf.length+'</span>':'')+'<span class="step-chevron">\u25be</span></div></div><div class="step-body"><div class="step-content"><div class="step-grid"><div><div class="step-section-title">\ud83d\udcdd Seznam \u00fakol\u016f</div>'+step.checklist.map(function(c){return'<label class="check-item"><input type="checkbox" '+(iC(c.id)?'checked':'')+' onchange="tC(\''+c.id+'\')"><span class="check-box"></span><div class="check-content"><span class="check-text">'+c.text+(c.required?' <span style="color:var(--danger);" title="Povinn\u00e9">*</span>':'')+'</span>'+(c.delivery||S.manualCheck[c.id]?'<div class="check-row">'+(c.delivery?'<span class="delivery-badge '+DL[c.delivery].class+'">'+DL[c.delivery].icon+' '+DL[c.delivery].label+'</span>':'')+(S.manualCheck[c.id]?'<span class="tag tag-gray">Mimo port\u00e1l</span>':'')+'</div>':'')+'</div><button class="btn-icon" title="Mimo port\u00e1l" onclick="event.preventDefault();event.stopPropagation();tM(\''+c.id+'\')" style="color:var(--text-muted);opacity:0.5;font-size:16px;">\ud83d\udd04</button></label>'}).join('')+'</div><div><div class="step-section-title">\ud83d\udd17 U\u017eite\u010dn\u00e9 odkazy</div><div class="link-list" style="margin-bottom:24px;">'+step.links.map(function(l){return'<a class="link-item" href="'+l.url+'" target="_blank">\u2197 '+l.title+'</a>'}).join('')+'</div><div class="step-section-title">\ud83d\udcc2 Dokumenty k tomuto kroku</div>'+(sf.length?sf.map(function(f){return'<div class="file-item"><div class="file-icon" style="background:var(--accent-dim);color:var(--accent);">'+gI(f.name)+'</div><div class="file-info"><div class="file-name">'+f.name+'</div><div class="file-meta">'+fS(f.size)+'</div></div><div class="file-actions"><button class="btn btn-secondary btn-sm" onclick="dlF('+f.id+')">St\u00e1hnout</button><button class="btn btn-danger btn-sm" onclick="rmF('+f.id+')">\u2715</button></div></div>'}).join(''):'<div style="font-size:13px;color:var(--text-muted);padding:8px 0;margin-bottom:12px;">Zat\u00edm nebyly nahr\u00e1ny \u017e\u00e1dn\u00e9 soubory.</div>')+'<button class="btn btn-secondary btn-sm" style="width:100%;" onclick="showUploadModal('+step.id+')">+ Nahr\u00e1t soubor ke kroku</button></div></div></div></div></div>'}).join('')}
+function toggleStep(id){document.getElementById('step-'+id).classList.toggle('open')}
+async function rDoc(){var af=await dbA('files');document.getElementById('documents-content').innerHTML=STEPS.map(function(step){var files=af.filter(function(f){return f.stepId===step.id});return'<div class="card" style="display:flex;flex-direction:column;"><div class="card-header" style="margin-bottom:12px;"><div><div class="card-title">Krok '+step.id+'</div><div class="card-subtitle">'+step.title+'</div></div><span class="tag tag-gray">'+files.length+' soubor\u016f</span></div><div style="flex:1;">'+(files.length?files.map(function(f){return'<div class="file-item" style="box-shadow:none;border-color:var(--border-light);"><div class="file-icon" style="background:var(--bg-app);color:var(--text-secondary);">'+gI(f.name)+'</div><div class="file-info"><div class="file-name">'+f.name+'</div><div class="file-meta">'+fS(f.size)+'</div></div><div class="file-actions"><button class="btn btn-sm btn-icon" style="color:var(--accent);" onclick="dlF('+f.id+')">\u2193</button><button class="btn btn-sm btn-icon" style="color:var(--danger);" onclick="rmF('+f.id+')">\u2715</button></div></div>'}).join(''):'<div class="empty-state" style="padding:20px;margin-top:12px;border:none;"><div class="empty-text" style="color:var(--text-muted);font-weight:normal;">Pr\u00e1zdn\u00e1 slo\u017eka</div></div>')+'</div><button class="btn btn-secondary btn-sm" style="margin-top:16px;width:100%;" onclick="showUploadModal('+step.id+')">Nahr\u00e1t do slo\u017eky</button></div>'}).join('')}
+async function rCal(){var now=new Date();if(cM===undefined){cM=now.getMonth();cY=now.getFullYear()}var ev=await dbA('events');var months=['Leden','\u00danor','B\u0159ezen','Duben','Kv\u011bten','\u010cerven','\u010cervenec','Srpen','Z\u00e1\u0159\u00ed','\u0158\u00edjen','Listopad','Prosinec'];document.getElementById('cal-month-title').textContent=months[cM]+' '+cY;var sd=(new Date(cY,cM,1).getDay()||7)-1;var dim=new Date(cY,cM+1,0).getDate();var dn=['Po','\u00dat','St','\u010ct','P\u00e1','So','Ne'];var h=dn.map(function(d){return'<div class="cal-header">'+d+'</div>'}).join('');for(var i=0;i<sd;i++)h+='<div class="cal-day other-month"></div>';for(var d=1;d<=dim;d++){var ds=cY+'-'+String(cM+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');var it=d===now.getDate()&&cM===now.getMonth()&&cY===now.getFullYear();var he=ev.some(function(e){return e.date===ds});h+='<div class="cal-day'+(it?' today':'')+(he?' has-event':'')+'">'+d+'</div>'}document.getElementById('calendar-grid').innerHTML=h;
+var up=ev.sort(function(a,b){return new Date(a.date)-new Date(b.date)});var ms=['led','\u00fano','b\u0159e','dub','kv\u011b','\u010dvn','\u010dvc','srp','z\u00e1\u0159','\u0159\u00edj','lis','pro'];document.getElementById('events-list').innerHTML=up.length?up.map(function(e){var d=new Date(e.date);var ip=d<new Date(new Date().setHours(0,0,0,0));return'<div class="event-item" style="'+(ip?'opacity:0.6;':'')+'"><div class="event-date"><div class="day">'+d.getDate()+'</div><div class="month">'+ms[d.getMonth()]+'</div></div><div class="event-info"><div class="event-title">'+e.title+'</div><div class="event-desc">'+(e.note||'')+' <span class="tag tag-gray">'+e.type+'</span></div></div><button class="btn btn-sm btn-icon" style="color:var(--danger);" onclick="rmEv('+e.id+')">\u2715</button></div>'}).join(''):'<div class="empty-state"><img class="empty-image" src="https://images.unsplash.com/photo-1506784951209-4505f01350a2?auto=format&fit=crop&q=80&w=300&h=300" alt="Kalend\u00e1\u0159"><div class="empty-text">V kalend\u00e1\u0159i aktu\u00e1ln\u011b nejsou \u017e\u00e1dn\u00e9 term\u00edny.</div></div>'}
+function changeMonth(d){cM+=d;if(cM>11){cM=0;cY++}if(cM<0){cM=11;cY--}rCal()}
+async function rEx(){var ef=await dbA('examFiles');document.getElementById('exam-files-list').innerHTML=ef.length?ef.map(function(f){return'<div class="file-item"><div class="file-icon" style="background:var(--purple-dim);color:var(--purple);">'+gI(f.name)+'</div><div class="file-info"><div class="file-name">'+f.name+'</div><div class="file-meta">'+fS(f.size)+'</div></div><div class="file-actions"><button class="btn btn-secondary btn-sm" onclick="dlEF('+f.id+')">St\u00e1hnout</button><button class="btn btn-danger btn-sm" onclick="rmEF('+f.id+')">\u2715</button></div></div>'}).join(''):'';var n=await dbG('state','examNotes');document.getElementById('exam-notes').value=n?n.value:'';document.getElementById('exam-written-status').textContent=iC('c6_1')?'Hotovo':'\u010cek\u00e1';document.getElementById('exam-written-status').style.color=iC('c6_1')?'var(--success)':'var(--warning)';document.getElementById('exam-oral-status').textContent=iC('c6_2')?'Hotovo':'\u010cek\u00e1';document.getElementById('exam-oral-status').style.color=iC('c6_2')?'var(--success)':'var(--warning)';document.getElementById('exam-cert-status').textContent=iC('c6_3')?'Ud\u011blena':'\u010cek\u00e1';document.getElementById('exam-cert-status').style.color=iC('c6_3')?'var(--success)':'var(--warning)'}
+async function saveExamNotes(){await dbP('state',{key:'examNotes',value:document.getElementById('exam-notes').value})}
+async function handleExamUpload(e){for(var i=0;i<e.target.files.length;i++){var f=e.target.files[i];var d=await rF(f);await dbP('examFiles',{name:f.name,size:f.size,type:f.type,data:d,date:new Date().toISOString()})}toast('Materi\u00e1ly nahr\u00e1ny','success');rEx();e.target.value=''}
+async function dlEF(id){var f=await dbG('examFiles',id);if(f)dl(f.data,f.name,f.type)}
+async function rmEF(id){if(confirm('Smazat?')){await dbD('examFiles',id);rEx();toast('Smaz\u00e1no','info')}}
+var pF=[];
+function showUploadModal(sid){pF=[];document.getElementById('upload-step-select').innerHTML=STEPS.map(function(s){return'<option value="'+s.id+'" '+(s.id===(sid||1)?'selected':'')+'>Krok '+s.id+': '+s.title+'</option>'}).join('');document.getElementById('modal-file-preview').innerHTML='';document.getElementById('upload-modal').classList.add('open')}
+function handleModalUpload(e){pF=Array.from(e.target.files);document.getElementById('modal-file-preview').innerHTML=pF.map(function(f){return'<div class="file-item"><div class="file-icon" style="background:var(--info-dim);color:var(--info);">'+gI(f.name)+'</div><div class="file-info"><div class="file-name">'+f.name+'</div><div class="file-meta">'+fS(f.size)+'</div></div></div>'}).join('')}
+async function confirmUpload(){if(!pF.length)return toast('Vyberte soubor','error');var sid=parseInt(document.getElementById('upload-step-select').value);for(var i=0;i<pF.length;i++){var f=pF[i];var d=await rF(f);await dbP('files',{stepId:sid,folder:STEPS.find(function(s){return s.id===sid}).folderName,name:f.name,size:f.size,type:f.type,data:d,date:new Date().toISOString()})}closeModal('upload-modal');toast('Nahr\u00e1no '+pF.length+' soubor\u016f','success');pF=[];rA()}
+async function dlF(id){var f=await dbG('files',id);if(f)dl(f.data,f.name,f.type)}
+async function rmF(id){if(confirm('Smazat?')){await dbD('files',id);toast('Smaz\u00e1no','info');rA()}}
+async function downloadAllFiles(){var files=await dbA('files');if(!files.length)return toast('\u017d\u00e1dn\u00e9 soubory','error');for(var i=0;i<files.length;i++){dl(files[i].data,files[i].folder+'__'+files[i].name,files[i].type);await new Promise(function(r){setTimeout(r,400)})}toast('Stahov\u00e1n\u00ed spu\u0161t\u011bno','success')}
+function rF(f){return new Promise(function(r){var rd=new FileReader();rd.onload=function(){r(rd.result)};rd.readAsArrayBuffer(f)})}
+function dl(d,n,t){var b=new Blob([d],{type:t||'application/octet-stream'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=n;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u)}
+function showEventModal(){document.getElementById('event-modal').classList.add('open')}
+async function saveEvent(){var t=document.getElementById('event-title-input').value.trim();var d=document.getElementById('event-date-input').value;if(!t||!d)return toast('Dopl\u0148te \u00fadaje','error');await dbP('events',{title:t,date:d,type:document.getElementById('event-type-input').value,note:document.getElementById('event-note-input').value.trim()});closeModal('event-modal');document.getElementById('event-title-input').value='';document.getElementById('event-date-input').value='';document.getElementById('event-note-input').value='';toast('Ulo\u017eeno','success');rCal();rD()}
+async function rmEv(id){if(confirm('Smazat?')){await dbD('events',id);rCal();rD();toast('Smaz\u00e1no','info')}}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function toast(m,t){t=t||'info';var el=document.getElementById('toast');el.className='toast '+t;el.innerHTML=(t==='success'?'\u2713':t==='error'?'\u2715':'i')+' '+m;el.classList.add('show');setTimeout(function(){el.classList.remove('show')},3000)}
+function fS(b){if(!b)return'0 B';var k=1024,s=['B','KB','MB','GB'];var i=Math.floor(Math.log(b)/Math.log(k));return parseFloat((b/Math.pow(k,i)).toFixed(1))+' '+s[i]}
+function gI(n){var e=n.split('.').pop().toLowerCase();return{pdf:'\ud83d\udcd5',doc:'\ud83d\udcd8',docx:'\ud83d\udcd8',xls:'\ud83d\udcd7',xlsx:'\ud83d\udcd7',jpg:'\ud83d\uddbc\ufe0f',png:'\ud83d\uddbc\ufe0f',zip:'\ud83d\udce6'}[e]||'\ud83d\udcc4'}
+['modal-upload-zone','exam-upload-zone'].forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener('dragover',function(e){e.preventDefault();el.classList.add('dragover')});el.addEventListener('dragleave',function(){el.classList.remove('dragover')});el.addEventListener('drop',function(e){e.preventDefault();el.classList.remove('dragover');var inp=el.querySelector('input[type="file"]');if(inp){inp.files=e.dataTransfer.files;inp.dispatchEvent(new Event('change'))}})});
+function a2b(b){var bytes=new Uint8Array(b);var r='';for(var i=0;i<bytes.byteLength;i++)r+=String.fromCharCode(bytes[i]);return btoa(r)}
+function b2a(s){var b=atob(s);var bytes=new Uint8Array(b.length);for(var i=0;i<b.length;i++)bytes[i]=b.charCodeAt(i);return bytes.buffer}
+async function exportAllData(e){e.preventDefault();var files=await dbA('files');var examFiles=await dbA('examFiles');var data={appState:S,files:files.map(function(f){return Object.assign({},f,{data:a2b(f.data)})}),events:await dbA('events'),examFiles:examFiles.map(function(f){return Object.assign({},f,{data:a2b(f.data)})}),examNotes:((await dbG('state','examNotes'))||{}).value||''};var u=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:'application/json'}));var a=document.createElement('a');a.href=u;a.download='mpo_portal_backup_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();document.body.removeChild(a);toast('Exportov\u00e1no','success')}
+async function importData(e){e.preventDefault();var inp=document.createElement('input');inp.type='file';inp.accept='.json';inp.onchange=async function(ev){var data=JSON.parse(await ev.target.files[0].text());if(!data.appState)return toast('Chyba','error');S=data.appState;await sS();if(data.files)for(var i=0;i<data.files.length;i++){data.files[i].data=b2a(data.files[i].data);await dbP('files',data.files[i])}if(data.events)for(var j=0;j<data.events.length;j++)await dbP('events',data.events[j]);if(data.examFiles)for(var k=0;k<data.examFiles.length;k++){data.examFiles[k].data=b2a(data.examFiles[k].data);await dbP('examFiles',data.examFiles[k])}if(data.examNotes)await dbP('state',{key:'examNotes',value:data.examNotes});toast('Importov\u00e1no','success');rA()};inp.click()}
+function rA(){rD();rP();var p=window.location.hash.slice(1)||'dashboard';if(p==='documents')rDoc();if(p==='calendar')rCal();if(p==='exams')rEx()}
+async function init(){await initDB();await lS();rA();var h=window.location.hash.slice(1);if(h)navigate(h)}
+window.addEventListener('hashchange',function(){var h=window.location.hash.slice(1);if(h)navigate(h)});
+init();
 </script>
 </body>
 </html>
