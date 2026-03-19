@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmapa ES MPO – Ivoš | WHC s.r.o.</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;color:#1a1a1a;min-height:100vh}
+.app{max-width:780px;margin:0 auto;padding:20px 16px 48px}
+
+/* Header */
+.header{background:#fff;border-radius:16px;border:1px solid #e8e8e8;padding:20px 24px;margin-bottom:20px}
+.header-top{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.logo{width:36px;height:36px;border-radius:8px;background:#1B4F8A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0}
+.header h1{font-size:20px;font-weight:600;color:#1B4F8A}
+.header-sub{font-size:13px;color:#888;margin-left:50px}
+
+/* Pipeline */
+.pipeline{display:flex;align-items:flex-start;gap:0;margin-bottom:20px;background:#fff;border-radius:16px;border:1px solid #e8e8e8;padding:16px;overflow-x:auto}
+.pip-step{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;flex:1;min-width:80px;padding:8px 4px;border-radius:10px;transition:background .15s}
+.pip-step:hover{background:#f5f5f0}
+.pip-step.active{background:#f0f4ff}
+.pip-dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;border:2.5px solid transparent;transition:all .2s;flex-shrink:0}
+.pip-step.active .pip-dot{transform:scale(1.1)}
+.pip-lbl{font-size:11px;color:#888;text-align:center;line-height:1.3;font-weight:400}
+.pip-step.active .pip-lbl{color:#1a1a1a;font-weight:500}
+.pip-sub{font-size:10px;color:#bbb;text-align:center}
+.pip-arr{color:#ccc;font-size:18px;padding:0 2px;margin-top:12px;flex-shrink:0}
+
+/* Progress */
+.prog-wrap{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.prog-bar{flex:1;height:6px;background:#eee;border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;transition:width .4s ease}
+.prog-txt{font-size:12px;color:#888;white-space:nowrap;min-width:80px;text-align:right}
+
+/* Detail card */
+.detail{background:#fff;border-radius:16px;border:1px solid #e8e8e8;overflow:hidden}
+.det-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #f0f0f0}
+.det-num{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;flex-shrink:0}
+.det-title{font-size:16px;font-weight:600;color:#1a1a1a}
+.det-sub{font-size:12px;color:#888;margin-top:2px}
+.det-pct{margin-left:auto;font-size:12px;color:#888;white-space:nowrap}
+.det-body{padding:18px 20px;display:flex;flex-direction:column;gap:16px}
+
+/* Alert box */
+.alert{border-radius:10px;padding:10px 14px;font-size:13px;line-height:1.55;border-left:3px solid}
+.alert.orange{border-color:#C45911;background:#FEF6EF;color:#7a3400}
+.alert.blue{border-color:#185FA5;background:#EEF5FF;color:#0a3060}
+.alert.green{border-color:#2d7a1f;background:#EFF8E9;color:#1a4a10}
+
+/* Section label */
+.sec-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#aaa;margin-bottom:8px}
+
+/* Info table */
+.info-tbl{border:1px solid #eee;border-radius:10px;overflow:hidden;font-size:13px}
+.info-row{display:flex;border-bottom:1px solid #f0f0f0}
+.info-row:last-child{border-bottom:none}
+.info-key{background:#fafafa;padding:8px 12px;min-width:120px;max-width:120px;flex-shrink:0;color:#666;font-weight:500;font-size:12px;line-height:1.4}
+.info-val{padding:8px 12px;color:#1a1a1a;line-height:1.45;font-size:13px}
+.info-val a{color:#185FA5;text-decoration:none;font-size:12px;display:block;margin-top:3px}
+.info-val a:hover{text-decoration:underline}
+
+/* Checklist */
+.cl-wrap{display:flex;flex-direction:column;gap:4px}
+.cl-item{display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:7px 10px;border-radius:8px;transition:background .1s;user-select:none}
+.cl-item:hover{background:#f8f8f6}
+.cl-box{width:18px;height:18px;border-radius:4px;border:1.5px solid #ccc;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.cl-box.done{border-color:transparent}
+.cl-box.done::after{content:'';display:block;width:5px;height:9px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg) translate(-1px,-1px)}
+.cl-txt{font-size:13px;line-height:1.4;color:#1a1a1a}
+.cl-item.checked .cl-txt{color:#aaa;text-decoration:line-through}
+
+/* Links / chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;font-size:12px;border:1px solid #e0e0e0;background:#fafafa;color:#1a1a1a;text-decoration:none;transition:background .1s}
+.chip:hover{background:#f0f0f0}
+.chip-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* Nav */
+.det-nav{display:flex;gap:8px;justify-content:flex-end;padding-top:12px;border-top:1px solid #f0f0f0}
+.btn{font-size:13px;padding:7px 16px;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer;color:#555;transition:all .1s}
+.btn:hover{background:#f5f5f0}
+.btn.primary{background:#1B4F8A;color:#fff;border-color:#1B4F8A}
+.btn.primary:hover{background:#163e6e}
+
+/* Footer */
+.footer{text-align:center;font-size:11px;color:#bbb;margin-top:24px}
+.footer a{color:#bbb}
+
+/* Google Drive section */
+.drive-card{background:#fff;border-radius:16px;border:1px solid #e8e8e8;padding:18px 20px;margin-top:16px}
+.drive-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.drive-icon{width:32px;height:32px;border-radius:8px;background:#EAF3DE;display:flex;align-items:center;justify-content:center;font-size:16px}
+.drive-title{font-size:14px;font-weight:600;color:#27500A}
+.folder-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+.folder{border:1px solid #e8e8e8;border-radius:10px;padding:10px 12px;font-size:12px}
+.folder-name{font-weight:500;color:#1a1a1a;margin-bottom:3px}
+.folder-sub{color:#888;font-size:11px;line-height:1.4}
+
+@media(max-width:500px){
+  .info-key{min-width:90px;max-width:90px}
+  .pipeline{padding:10px 8px}
+  .pip-step{min-width:58px}
+  .pip-dot{width:32px;height:32px;font-size:14px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- Header -->
+<div class="header">
+  <div class="header-top">
+    <div class="logo">WHC</div>
+    <h1>Roadmapa: Energetický specialista MPO</h1>
+  </div>
+  <div class="header-sub">Ivoš &mdash; průvodce krok za krokem &nbsp;|&nbsp; WHC s.r.o. &nbsp;|&nbsp; Březen 2026</div>
+</div>
+
+<!-- Pipeline -->
+<div class="pipeline" id="pipeline"></div>
+
+<!-- Progress -->
+<div class="prog-wrap">
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+  <div class="prog-txt" id="prog-txt">0 % hotovo</div>
+</div>
+
+<!-- Detail -->
+<div class="detail" id="detail"></div>
+
+<!-- Google Drive kartotéka -->
+<div class="drive-card">
+  <div class="drive-header">
+    <div class="drive-icon">&#128193;</div>
+    <div>
+      <div class="drive-title">Sdílená složka na Google Disku – kartotéka dokumentů</div>
+      <div style="font-size:12px;color:#888;margin-top:1px">Ivoš sem nahrává scany, Matěj sem dává formuláře ke stažení</div>
+    </div>
+  </div>
+  <div class="folder-grid">
+    <div class="folder">
+      <div class="folder-name">&#128196; Formuláře ke stažení</div>
+      <div class="folder-sub">Žádost FO, žádost PO (doplní Matěj)</div>
+    </div>
+    <div class="folder">
+      <div class="folder-name">&#128247; Ivoš – scany dokladů</div>
+      <div class="folder-sub">Vysvědčení, čestné prohlášení o praxi</div>
+    </div>
+    <div class="folder">
+      <div class="folder-name">&#9989; Podepsané dokumenty</div>
+      <div class="folder-sub">Souhlas určené osoby, potvrzení Czech Point</div>
+    </div>
+    <div class="folder">
+      <div class="folder-name">&#128179; Platby a doklady</div>
+      <div class="folder-sub">Výpis z banky, kolky (foto)</div>
+    </div>
+    <div class="folder">
+      <div class="folder-name">&#128220; Rozhodnutí MPO</div>
+      <div class="folder-sub">Ivošovo + WHC s.r.o. (po udělení)</div>
+    </div>
+    <div class="folder">
+      <div class="folder-name">&#128218; Studijní materiály</div>
+      <div class="folder-sub">Zkušební otázky PDF, okruhy ústní části</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">WHC s.r.o. &copy; 2026 &nbsp;&middot;&nbsp; Interní dokument &nbsp;&middot;&nbsp; Připravil Matěj Kocanda, MBA<br>
+<a href="https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/" target="_blank">mpo.gov.cz – energetičtí specialisté</a> &nbsp;&middot;&nbsp;
+<a href="https://sei.gov.cz/?p=9686" target="_blank">SEI – termíny zkoušek</a> &nbsp;&middot;&nbsp;
+<a href="https://www.mpo-enex.cz/experti" target="_blank">ENEX – seznam ES</a>
+</div>
+</div>
+
+<script>
+var checked={};
+var STEPS=[
+  {id:0,emoji:"📂",label:"Doklady",sub:"1–2 týdny",color:"#1B4F8A",bg:"#E6F1FB",title:"Shromáždění dokladů",desc:"Připrav vše před odesláním žádosti",
+   alert:{type:"orange",text:"Ing. titul (ekonomická VŠ) MPO neakceptuje. Relevantní je SŠ stavební průmyslovka → 6 let praxe v oboru stavebnictví nebo energetiky."},
+   info:[
+     {k:"Vysvědčení",v:"Maturitní vysvědčení – stavební průmyslovka. Prostá kopie, není nutné úředně ověřovat."},
+     {k:"Výpis z RT",v:"Občané ČR NEDOKLÁDAJÍ – MPO si ověří sám přes ISZR automaticky."},
+     {k:"Praxe (OSVČ)",v:"Čestné prohlášení (vlastnoruční podpis + datum). Obsah: jméno, IČO, popis činnosti v oboru stavebnictví/energetiky, rozsah od–do, celkem X let."},
+     {k:"Praxe (zaměstnanec)",v:"Potvrzení zaměstnavatele: název firmy, IČO, popis práce, doba pracovního poměru. Podpis + razítko."},
+   ],
+   checks:["Najít maturitní vysvědčení (nebo požádat školu o duplikát)","Připravit čestné prohlášení o praxi (min. 6 let)","Zkontrolovat: mám aktivní datovou schránku fyzické osoby?"],
+   links:[]},
+  {id:1,emoji:"🏦",label:"Platba",sub:"internet banking",color:"#185FA5",bg:"#E6F1FB",title:"Správní poplatek – platba",desc:"Zaplatit PŘED odesláním žádosti",
+   alert:{type:"blue",text:"MPO nevydává příjmový doklad. Pro účetnictví WHC stačí výpis z internetového bankovnictví (PDF nebo screenshot)."},
+   info:[
+     {k:"Příjemce",v:"Ministerstvo průmyslu a obchodu ČR"},
+     {k:"Číslo účtu",v:"3711-1525001 / 0710  (ČNB)"},
+     {k:"Var. symbol",v:"41300"},
+     {k:"Zpráva",v:"správní poplatek k žádosti o udělení oprávnění ES"},
+     {k:"Výše (typ B)",v:"1 000 Kč za PENB  |  Typ A+B = 2 000 Kč (doporučujeme!)"},
+     {k:"Alternativa",v:"Kolkové známky 1 000 Kč/typ – koupit na poště nebo Czech Point"},
+   ],
+   checks:["Odeslat platbu přes internetové bankovnictví na účet MPO","Uložit PDF výpis nebo screenshot jako doklad o platbě"],
+   links:[]},
+  {id:2,emoji:"📬",label:"Žádost MPO",sub:"ihned podat",color:"#1F6B4E",bg:"#EAF3DE",title:"Podání žádosti na MPO",desc:"Vyplnit formulář a odeslat s přílohami",
+   alert:{type:"green",text:"Doporučujeme datovou schránku – nejrychlejší, prokazatelné datum podání. ID schránky MPO: bxtaaw4"},
+   info:[
+     {k:"Formulář",v:"Stáhnout ze stránek MPO:",link:"https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/jak-se-stat-energetickym-specialistou/jak-se-stat-energetickym-specialistou--277126/",linkTxt:"↗ mpo.gov.cz – formulář žádosti FO"},
+     {k:"Online žádost",v:"ENEX systém:",link:"https://www.mpo-enex.cz/registrace/",linkTxt:"↗ mpo-enex.cz/registrace"},
+     {k:"DS MPO ID",v:"bxtaaw4"},
+     {k:"Poštou",v:"MPO, Odbor en. účinnosti a úspor, Na Františku 32, 110 15 Praha 1"},
+     {k:"Přílohy",v:"1) Vyplněný formulář  2) Kopie vysvědčení  3) Doložení praxe  4) Doklad o platbě"},
+     {k:"Lhůta",v:"Zkoušku musíš vykonat do 12 měsíců od podání žádosti"},
+   ],
+   checks:["Stáhnout a vyplnit formulář žádosti fyzické osoby","Zaškrtnout oprávnění B (PENB) – volitelně přidat A (audit)","Zkompletovat přílohy (vysvědčení, praxe, doklad o platbě)","Odeslat datovou schránkou na ID: bxtaaw4"],
+   links:[{url:"https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/jak-se-stat-energetickym-specialistou/jak-se-stat-energetickym-specialistou--277126/",txt:"MPO – formulář žádosti",color:"#1B4F8A"},{url:"https://www.mpo-enex.cz/registrace/",txt:"ENEX – online žádost",color:"#1F6B4E"},{url:"https://www.czechpoint.cz/public/",txt:"Czech Point – aktivace DS",color:"#185FA5"}]},
+  {id:3,emoji:"📚",label:"Studium",sub:"2–3 měsíce",color:"#854F0B",bg:"#FAEEDA",title:"Studium a příprava",desc:"Čas od podání žádosti do pozvánky od SEI",
+   alert:{type:"orange",text:"Zkušební otázky pro písemnou část jsou veřejné na webu MPO – stejná sada se používá u zkoušky. Memorovat odpovědi je legitimní přístup."},
+   info:[
+     {k:"Otázky písemná",v:"Typ B (PENB): 50 otázek. Stáhnout PDF z MPO.",link:"https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/jak-se-stat-energetickym-specialistou/jak-se-stat-energetickym-specialistou--277126/",linkTxt:"↗ Zkušební otázky na mpo.gov.cz"},
+     {k:"Okruhy ústní",v:"Tematické okruhy ke stažení z MPO/SEI.",link:"https://sei.gov.cz/?page_id=9487",linkTxt:"↗ sei.gov.cz – tematické okruhy"},
+     {k:"Kurz AEA",v:"8 dní, 58 hod., cca 10–15 tis. Kč (doporučeno).",link:"https://www.aea.cz/vzdelavaci-akce/osmidenni-pripravny-kurz-ke-slozeni-zkousek",linkTxt:"↗ aea.cz – přípravný kurz"},
+     {k:"Kurz ČKAIT",v:"Pro členy ČKAIT – kombinace PENB + audit.",link:"https://www.ckait.cz/content/pripravny-kurz-pro-odborne-zkousky-energetickych-specialistu",linkTxt:"↗ ckait.cz – kurz ES"},
+     {k:"Legislativa",v:"Zákon č. 406/2000 Sb. + vyhláška č. 264/2020 Sb. (ENB) + ČSN EN ISO 52000-1"},
+   ],
+   checks:["Stáhnout zkušební otázky pro typ B (PENB) z webu MPO","Stáhnout tematické okruhy ústní části (SEI/MPO)","Přihlásit se na přípravný kurz AEA nebo ČKAIT","Prostudovat zákon 406/2000 Sb. a vyhlášku 264/2020 Sb."],
+   links:[{url:"https://www.aea.cz/vzdelavaci-akce/osmidenni-pripravny-kurz-ke-slozeni-zkousek",txt:"AEA – přípravný kurz",color:"#854F0B"},{url:"https://www.ckait.cz/content/pripravny-kurz-pro-odborne-zkousky-energetickych-specialistu",txt:"ČKAIT – kurz ES",color:"#3B6D11"}]},
+  {id:4,emoji:"✏️",label:"Zkouška",sub:"1 den Praha",color:"#C45911",bg:"#FEF0E6",title:"Odborná zkouška – den D",desc:"SEI pošle pozvánku min. 30 dní předem",
+   alert:{type:"orange",text:"1 opravný pokus v rámci jedné žádosti. Neúspěch v písemné → celá zkouška znovu. Neúspěch jen v ústní → pouze ústní v náhradním termínu."},
+   info:[
+     {k:"Místo",v:"MPO – Na Františku 32, 110 15 Praha 1 (počítačová učebna)"},
+     {k:"Písemná část",v:"50 otázek | 60 minut | min. 75 % = aspoň 38 správných odpovědí"},
+     {k:"Ústní část",v:"Los 3 tematických okruhů → rozprava před komisí SEI/MPO"},
+     {k:"Termíny 2026",v:"29. 4. / 13. 5. / 3. 6. / 17. 6. / 2. 7. / 26. 8.",link:"https://sei.gov.cz/?p=9686",linkTxt:"↗ Všechny termíny na sei.gov.cz"},
+     {k:"Co vzít s sebou",v:"Občanský průkaz. Pomůcky dle pokynů komise."},
+   ],
+   checks:["Zkontrolovat pozvánku od SEI (datum, místo, tematické okruhy)","Dorazit na MPO Na Františku 32, Praha 1 v určený čas s OP","Složit písemný test (50 otázek, 60 min, min. 75 %)","Složit ústní část (3 losované okruhy před komisí)"],
+   links:[{url:"https://sei.gov.cz/?p=9686",txt:"SEI – termíny zkoušek 2026",color:"#C45911"}]},
+  {id:5,emoji:"🏆",label:"Oprávnění",sub:"30 dní + PM",color:"#6B3A8A",bg:"#EEEDFE",title:"Rozhodnutí MPO a oprávnění",desc:"Automaticky po složení zkoušky",
+   alert:{type:"blue",text:"Ivoš se může vzdát práva na odvolání písemně → rozhodnutí nabude právní moci okamžitě (nemusí čekat 15 dní). Zkrátí to čekání o 2 týdny."},
+   info:[
+     {k:"Rozhodnutí MPO",v:"Do 30 dní od zkoušky – doručeno poštou nebo do datové schránky"},
+     {k:"Lhůta odvolání",v:"15 dní. Vzdání se odvolání písemně → PM okamžitě."},
+     {k:"Právní moc (PM)",v:"16. den od doručení (nebo dříve při vzdání se odvolání)"},
+     {k:"Zápis v Seznamu ES",v:"Automaticky po PM",link:"https://www.mpo-enex.cz/experti",linkTxt:"↗ mpo-enex.cz/experti"},
+     {k:"ENEX přihlášení",v:"MPO zašle přihlašovací údaje spolu s rozhodnutím"},
+     {k:"Platnost oprávnění",v:"3 roky. 3 měsíce před koncem → přihlásit kurz průběžného vzdělávání přes ENEX (min. 18 kreditů / 3 roky)"},
+     {k:"WHC s.r.o.",v:"Ivoš = Určená osoba → WHC podá vlastní žádost jako PO. Přílohy: rozhodnutí Ivoše + doklad o pracovním poměru + jeho souhlas. MPO vydá do 30 dní, bez zkoušky."},
+   ],
+   checks:["Přijmout rozhodnutí MPO (nebo se vzdát odvolání pro urychlení PM)","Přihlásit se do ENEX přes přihlašovací údaje od MPO","Ověřit zápis na mpo-enex.cz/experti","Předat Matějovi podklady pro žádost WHC s.r.o. jako PO"],
+   links:[{url:"https://www.mpo-enex.cz/experti",txt:"ENEX – seznam ES",color:"#6B3A8A"}]}
+];
+
+var current=0;
+
+function getProgress(idx){
+  var s=STEPS[idx];
+  if(!s.checks||!s.checks.length)return 0;
+  var done=0;
+  for(var j=0;j<s.checks.length;j++){if(checked[idx+'_'+j])done++;}
+  return Math.round(100*done/s.checks.length);
+}
+
+function getTotalProgress(){
+  var total=0,done=0;
+  for(var i=0;i<STEPS.length;i++){
+    var s=STEPS[i];
+    if(!s.checks)continue;
+    total+=s.checks.length;
+    for(var j=0;j<s.checks.length;j++){if(checked[i+'_'+j])done++;}
+  }
+  return total?Math.round(100*done/total):0;
+}
+
+function renderPipeline(){
+  var el=document.getElementById('pipeline');
+  var html='';
+  for(var i=0;i<STEPS.length;i++){
+    var s=STEPS[i];
+    var act=i===current?' active':'';
+    var pct=getProgress(i);
+    var dotStyle='background:'+s.bg+';border-color:'+(i===current?s.color:'transparent')+';';
+    html+='<div class="pip-step'+act+'" onclick="goTo('+i+')">';
+    html+='<div class="pip-dot" style="'+dotStyle+'">';
+    if(pct===100)html+='<svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8l4 4 6-7" fill="none" stroke="'+s.color+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    else html+=s.emoji;
+    html+='</div>';
+    html+='<div class="pip-lbl">'+s.label+'</div>';
+    html+='<div class="pip-sub">'+s.sub+'</div>';
+    html+='</div>';
+    if(i<STEPS.length-1)html+='<div class="pip-arr">›</div>';
+  }
+  el.innerHTML=html;
+}
+
+function renderProgress(){
+  var pct=getTotalProgress();
+  var fill=document.getElementById('prog-fill');
+  var txt=document.getElementById('prog-txt');
+  fill.style.width=pct+'%';
+  fill.style.background=STEPS[current].color;
+  txt.textContent=pct+' % hotovo';
+}
+
+function renderDetail(){
+  var s=STEPS[current];
+  var pct=getProgress(current);
+  var el=document.getElementById('detail');
+  var html='';
+
+  // Header
+  html+='<div class="det-header">';
+  html+='<div class="det-num" style="background:'+s.bg+';color:'+s.color+'">'+(current+1)+'</div>';
+  html+='<div><div class="det-title">'+s.title+'</div><div class="det-sub">'+s.desc+'</div></div>';
+  html+='<div class="det-pct">'+pct+'&nbsp;%</div>';
+  html+='</div>';
+  html+='<div class="det-body">';
+
+  // Alert
+  if(s.alert){
+    html+='<div class="alert '+s.alert.type+'">'+s.alert.text+'</div>';
+  }
+
+  // Info
+  if(s.info&&s.info.length){
+    html+='<div><div class="sec-lbl">Klíčové informace</div>';
+    html+='<div class="info-tbl">';
+    for(var i=0;i<s.info.length;i++){
+      var row=s.info[i];
+      html+='<div class="info-row"><div class="info-key">'+row.k+'</div><div class="info-val">'+row.v;
+      if(row.link)html+='<a href="'+row.link+'" target="_blank">'+row.linkTxt+'</a>';
+      html+='</div></div>';
+    }
+    html+='</div></div>';
+  }
+
+  // Checklist
+  if(s.checks&&s.checks.length){
+    html+='<div><div class="sec-lbl">Můj checklist</div><div class="cl-wrap">';
+    for(var j=0;j<s.checks.length;j++){
+      var key=current+'_'+j;
+      var done=checked[key];
+      html+='<div class="cl-item'+(done?' checked':'')+'" onclick="toggleCheck('+current+','+j+')">';
+      html+='<div class="cl-box'+(done?' done':'')+'" style="'+(done?'background:'+s.color+';border-color:'+s.color:'')+'"></div>';
+      html+='<div class="cl-txt">'+s.checks[j]+'</div>';
+      html+='</div>';
+    }
+    html+='</div></div>';
+  }
+
+  // Links
+  if(s.links&&s.links.length){
+    html+='<div><div class="sec-lbl">Užitečné odkazy</div><div class="chips">';
+    for(var k=0;k<s.links.length;k++){
+      var lnk=s.links[k];
+      html+='<a class="chip" href="'+lnk.url+'" target="_blank"><span class="chip-dot" style="background:'+lnk.color+'"></span>'+lnk.txt+'</a>';
+    }
+    html+='</div></div>';
+  }
+
+  // Nav
+  html+='<div class="det-nav">';
+  if(current>0)html+='<button class="btn" onclick="goTo('+(current-1)+')">← Předchozí</button>';
+  if(current<STEPS.length-1)html+='<button class="btn primary" onclick="goTo('+(current+1)+')">Další krok →</button>';
+  else html+='<button class="btn primary" onclick="window.open(\'https://mpo.gov.cz/cz/energetika/uspory-energie/energeticti-specialiste/\',\'_blank\')">Přejít na MPO →</button>';
+  html+='</div>';
+
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+function goTo(idx){
+  current=idx;
+  renderPipeline();
+  renderProgress();
+  renderDetail();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleCheck(stepIdx,checkIdx){
+  var key=stepIdx+'_'+checkIdx;
+  checked[key]=!checked[key];
+  renderDetail();
+  renderPipeline();
+  renderProgress();
+}
+
+goTo(0);
+</script>
+</body>
+</html>
