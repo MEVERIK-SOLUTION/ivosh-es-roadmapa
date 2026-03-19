@@ -24,7 +24,7 @@ Aplikace pokrývá 6 kroků:
 ## Nasazení
 
 Stránka je nasazena přes GitHub Pages na adrese:  
-**https://[USERNAME].github.io/ivosh-es-roadmapa/**
+**https://meverik-solution.github.io/ivosh-es-roadmapa/**
 
 Při každém commitu do větve `main` se automaticky spustí GitHub Actions workflow a stránka se aktualizuje do ~2 minut.
 
@@ -33,6 +33,7 @@ Při každém commitu do větve `main` se automaticky spustí GitHub Actions wor
 ```
 ivosh-es-roadmapa/
 ├── index.html          # Hlavní interaktivní aplikace (vše v jednom souboru)
+├── .nojekyll           # Vypnutí Jekyll zpracování na GitHub Pages
 ├── README.md           # Tento soubor
 └── .github/
     └── workflows/
